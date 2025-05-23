@@ -27,11 +27,24 @@ public static class IntroScenePatches
         return false;
     }
 
-    [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.OnDestroy))]
+    [HarmonyPatch(typeof(IntroCutscene._CoBegin_d__34), nameof(IntroCutscene._CoBegin_d__34.MoveNext))]
     [HarmonyPrefix]
-    public static void IntroCutsceneOnDestroyPatch()
+    public static void IntroCutsceneOnDestroyPatch(IntroCutscene._CoBegin_d__34 __instance)
     {
+        if (__instance.__1__state != -1)
+        {
+            return;
+        }
 
+        Start();
+    }
+
+    [HarmonyPatch(typeof(SpawnInMinigame), nameof(SpawnInMinigame.Close))]
+    [HarmonyPrefix]
+    public static void SpawnInMinigameClosePatch() => Start();
+
+    private static void Start()
+    {
         foreach (var button in CustomButtonManager.Buttons.Where(x => x.Enabled(PlayerControl.LocalPlayer.Data.Role)))
         {
             button.SetTimer(OptionGroupSingleton<GeneralOptions>.Instance.GameStartCd);
@@ -70,9 +83,6 @@ public static class IntroScenePatches
             panel.SetTaskText(role.SetTabText().ToString());
         }
     }
-    [HarmonyPatch(typeof(SpawnInMinigame), nameof(SpawnInMinigame.Close))]
-    [HarmonyPrefix]
-    public static void SpawnInMinigameClosePatch() => IntroCutsceneOnDestroyPatch();
 }
 
 public static class ModifierIntroPatch
@@ -99,10 +109,10 @@ public static class ModifierIntroPatch
                 ModifierText = UnityEngine.Object.Instantiate(__instance.RoleText, __instance.RoleText.transform.parent, false);
         }
     }
-    [HarmonyPatch(typeof(IntroCutscene._CoBegin_d__35), nameof(IntroCutscene._CoBegin_d__35.MoveNext))]
+    [HarmonyPatch(typeof(IntroCutscene._CoBegin_d__34), nameof(IntroCutscene._CoBegin_d__34.MoveNext))]
     public static class ShowModifierPatch_CoBegin
     {
-        public static void Postfix(IntroCutscene._ShowRole_d__41 __instance)
+        public static void Postfix(IntroCutscene._CoBegin_d__34 __instance)
         {
             var modifier = PlayerControl.LocalPlayer.GetModifiers<AllianceGameModifier>().FirstOrDefault();
 
@@ -118,10 +128,10 @@ public static class ModifierIntroPatch
             }
         }
     }
-    [HarmonyPatch(typeof(IntroCutscene._ShowTeam_d__38), nameof(IntroCutscene._ShowTeam_d__38.MoveNext))]
+    [HarmonyPatch(typeof(IntroCutscene._ShowTeam_d__37), nameof(IntroCutscene._ShowTeam_d__37.MoveNext))]
     public static class ShowModifierPatch_MoveNext
     {
-        public static void Postfix(IntroCutscene._ShowRole_d__41 __instance)
+        public static void Postfix(IntroCutscene._ShowTeam_d__37 __instance)
         {
             var modifier = PlayerControl.LocalPlayer.GetModifiers<AllianceGameModifier>().FirstOrDefault();
             
@@ -137,10 +147,10 @@ public static class ModifierIntroPatch
             }
         }
     }
-    [HarmonyPatch(typeof(IntroCutscene._ShowRole_d__41), nameof(IntroCutscene._ShowRole_d__41.MoveNext))]
+    [HarmonyPatch(typeof(IntroCutscene._ShowRole_d__40), nameof(IntroCutscene._ShowRole_d__40.MoveNext))]
     public static class ShowModifierPatch_Role
     {
-        public static void Postfix(IntroCutscene._ShowRole_d__41 __instance)
+        public static void Postfix(IntroCutscene._ShowRole_d__40 __instance)
         {
             var modifier = PlayerControl.LocalPlayer.GetModifiers<AllianceGameModifier>().FirstOrDefault();
             

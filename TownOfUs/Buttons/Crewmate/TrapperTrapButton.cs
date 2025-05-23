@@ -26,7 +26,8 @@ public sealed class TrapperTrapButton : TownOfUsRoleButton<TrapperRole>
         var pos = PlayerControl.LocalPlayer.transform.position;
         pos.z += 0.001f;
 
-        Trap.CreateTrap(role, pos);
+        // TODO: waiting for android assetbundle
+        //Trap.CreateTrap(role, pos);
 
         TouAudio.PlaySound(TouAudio.TrapperPlaceSound);
     }

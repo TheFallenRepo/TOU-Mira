@@ -422,6 +422,9 @@ public static class MiscUtils
 
     public static GameObject CreateSpherePrimitive(Vector3 location, float radius)
     {
+        // TODO: waiting for android assetbundle
+        return new GameObject("Sphere");
+        /*
         var spherePrimitive = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
         spherePrimitive.name = "Sphere Primitive";
@@ -436,6 +439,7 @@ public static class MiscUtils
         spherePrimitive.transform.position = location;
 
         return spherePrimitive;
+        */
     }
 
     public static ArrowBehaviour CreateArrow(Transform parent, Color color)

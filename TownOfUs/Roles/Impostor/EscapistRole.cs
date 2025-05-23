@@ -27,6 +27,7 @@ public sealed class EscapistRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfU
         CanUseVent = OptionGroupSingleton<EscapistOptions>.Instance.CanVent,
     };
 
+    [HideFromIl2Cpp]
     public Vector2? MarkedLocation { get; set; }
 
     [MethodRpc((uint)TownOfUsRpc.Recall, SendImmediately = true)]
