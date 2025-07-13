@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using Il2CppInterop.Runtime.Attributes;
 using MiraAPI.Events;
-using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.Roles;
 using Reactor.Networking.Attributes;
@@ -9,7 +8,6 @@ using Reactor.Networking.Rpc;
 using TownOfUs.Events.TouEvents;
 using TownOfUs.Modifiers.Impostor;
 using TownOfUs.Modules.Wiki;
-using TownOfUs.Options.Roles.Impostor;
 using TownOfUs.Utilities;
 using UnityEngine;
 
@@ -17,21 +15,6 @@ namespace TownOfUs.Roles.Impostor;
 
 public sealed class BlackmailerRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, IDoomable
 {
-    public void FixedUpdate()
-    {
-        if (Player == null || Player.Data.Role is not JanitorRole || Player.HasDied() || !Player.AmOwner ||
-            MeetingHud.Instance || (!HudManager.Instance.UseButton.isActiveAndEnabled &&
-                                    !HudManager.Instance.PetButton.isActiveAndEnabled))
-        {
-            return;
-        }
-
-        HudManager.Instance.KillButton.ToggleVisible(
-            OptionGroupSingleton<BlackmailerOptions>.Instance.BlackmailerKill ||
-            (Player != null && Player.GetModifiers<BaseModifier>().Any(x => x is ICachedRole)) ||
-            (Player != null && MiscUtils.ImpAliveCount == 1));
-    }
-
     public DoomableType DoomHintType => DoomableType.Insight;
     public string RoleName => "Blackmailer";
     public string RoleDescription => "Silence Crewmates During Meetings";

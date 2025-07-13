@@ -10,8 +10,8 @@ public sealed class MinerOptions : AbstractOptionGroup<MinerRole>
 {
     public override string GroupName => "Miner";
 
-    [ModdedNumberOption("Number Of Miner Vents Per Game", 0f, 30f, 5f, MiraNumberSuffixes.None, "0", true)]
-    public float MaxMines { get; set; } = 0f;
+    [ModdedNumberOption("Number Of Miner Vents Per Game", 2f, 15f, 1f, MiraNumberSuffixes.None, "0")]
+    public float MaxMines { get; set; } = 5f;
 
     [ModdedNumberOption("Mine Cooldown", 10f, 60f, 2.5f, MiraNumberSuffixes.Seconds)]
     public float MineCooldown { get; set; } = 25f;
@@ -23,9 +23,6 @@ public sealed class MinerOptions : AbstractOptionGroup<MinerRole>
     {
         Visible = () => OptionGroupSingleton<MinerOptions>.Instance.MineVisibility is MineVisiblityOptions.Immediate
     };
-
-    [ModdedToggleOption("Miner Can Kill With Teammate")]
-    public bool MinerKill { get; set; } = true;
 }
 
 public enum MineVisiblityOptions

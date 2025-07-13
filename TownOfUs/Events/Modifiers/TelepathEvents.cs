@@ -5,7 +5,6 @@ using MiraAPI.Modifiers;
 using MiraAPI.Utilities;
 using Reactor.Utilities;
 using TownOfUs.Modifiers.Game.Impostor;
-using TownOfUs.Modules;
 using TownOfUs.Options.Modifiers.Impostor;
 using TownOfUs.Utilities;
 using UnityEngine;
@@ -23,26 +22,7 @@ public static class TelepathEvents
         if (PlayerControl.LocalPlayer.HasModifier<TelepathModifier>() && !source.AmOwner && !victim.AmOwner)
         {
             var options = OptionGroupSingleton<TelepathOptions>.Instance;
-            if (victim.IsImpostor() && source == victim && options.KnowFailedGuess && MeetingHud.Instance &&
-                victim.TryGetModifier<ImpostorAssassinModifier>(out var assassin) && assassin.LastAttemptedVictim)
-            {
-                Coroutines.Start(MiscUtils.CoFlash(TownOfUsColors.ImpSoft, alpha: 0.4f));
-                var notif1 = Helpers.CreateAndShowNotification(
-                    $"<b>{TownOfUsColors.ImpSoft.ToTextColor()}Your teammate, {victim.Data.PlayerName}, attempted to shoot {assassin.LastAttemptedVictim!.Data.PlayerName} as {assassin.LastGuessedItem}, but failed!</b></color>",
-                    Color.white, spr: TouModifierIcons.Telepath.LoadAsset());
-                notif1.Text.SetOutlineThickness(0.35f);
-                notif1.transform.localPosition = new Vector3(0f, 1f, -20f);
-            }
-            else if (source.IsImpostor() && source != victim && options.KnowCorrectGuess && MeetingHud.Instance)
-            {
-                Coroutines.Start(MiscUtils.CoFlash(TownOfUsColors.ImpSoft, alpha: 0.05f));
-                var notif1 = Helpers.CreateAndShowNotification(
-                    $"<b>{TownOfUsColors.ImpSoft.ToTextColor()}Your teammate, {source.Data.PlayerName}, shot {victim.Data.PlayerName} as {victim.GetRoleWhenAlive().TeamColor.ToTextColor()}{victim.GetRoleWhenAlive().NiceName}</color>!</b></color>",
-                    Color.white, spr: TouModifierIcons.Telepath.LoadAsset());
-                notif1.Text.SetOutlineThickness(0.35f);
-                notif1.transform.localPosition = new Vector3(0f, 1f, -20f);
-            }
-            else if (source.IsImpostor() && source != victim)
+            if (source.IsImpostor() && source != victim && !MeetingHud.Instance)
             {
                 Coroutines.Start(MiscUtils.CoFlash(TownOfUsColors.ImpSoft, alpha: 0.05f));
                 var notif1 = Helpers.CreateAndShowNotification(
@@ -55,7 +35,7 @@ public static class TelepathEvents
                     victim?.AddModifier<TelepathDeathNotifierModifier>(PlayerControl.LocalPlayer);
                 }
             }
-            else if (victim.IsImpostor() && options.KnowDeath)
+            else if (victim.IsImpostor() && options.KnowDeath && !MeetingHud.Instance)
             {
                 Coroutines.Start(MiscUtils.CoFlash(TownOfUsColors.ImpSoft, alpha: 0.4f));
                 var notif1 = Helpers.CreateAndShowNotification(

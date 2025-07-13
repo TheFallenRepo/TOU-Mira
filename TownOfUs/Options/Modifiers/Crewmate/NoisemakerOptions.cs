@@ -24,6 +24,6 @@ public sealed class NoisemakerOptions : AbstractOptionGroup<NoisemakerModifier>
     [ModdedToggleOption("Only Triggers If A Body Exists")]
     public bool BodyCheck { get; set; } = true;
 
-    [ModdedNumberOption("Alert Duration", 1f, 20f, 1f, MiraNumberSuffixes.Seconds)]
-    public float AlertDuration { get; set; } = 5f;
+    [ModdedNumberOption("Alert Duration", 1f, 15f, 1f, MiraNumberSuffixes.Seconds)]
+    public float AlertDuration { get; set; } = 10f;
 }

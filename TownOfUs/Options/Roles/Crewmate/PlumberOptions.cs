@@ -16,8 +16,8 @@ public sealed class PlumberOptions : AbstractOptionGroup<PlumberRole>
     public float BlockCooldown { get; set; } = 25f;
 
     [ModdedNumberOption("Max Number Of Barricades", 1f, 15f, 1f, MiraNumberSuffixes.None, "0")]
-    public float MaxBarricades { get; set; } = 3f;
+    public float MaxBarricades { get; set; } = 5f;
 
     [ModdedToggleOption("Get More Barricades From Completing Tasks")]
-    public bool TaskUses { get; set; } = true;
+    public bool TaskUses { get; set; } = false;
 }

@@ -9,25 +9,25 @@ public sealed class RoleOptions : AbstractOptionGroup
 {
     public static readonly string[] OptionStrings =
     [
-        "Common <color=#66FFFFFF>Crew</color>",
-        "Random <color=#66FFFFFF>Crew</color>",
         "<color=#66FFFFFF>Crew</color> Investigative",
         "<color=#66FFFFFF>Crew</color> Killing",
         "<color=#66FFFFFF>Crew</color> Protective",
         "<color=#66FFFFFF>Crew</color> Power",
         "<color=#66FFFFFF>Crew</color> Support",
+        "Common <color=#66FFFFFF>Crew</color>",
         "Special <color=#66FFFFFF>Crew</color>",
-        "Non-<color=#FF0000FF>Imp</color>",
-        "Common <color=#999999FF>Neutral</color>",
-        "Random <color=#999999FF>Neutral</color>",
+        "Random <color=#66FFFFFF>Crew</color>",
         "<color=#999999FF>Neutral</color> Benign",
         "<color=#999999FF>Neutral</color> Evil",
         "<color=#999999FF>Neutral</color> Killing",
-        "Common <color=#FF0000FF>Imp</color>",
-        "Random <color=#FF0000FF>Imp</color>",
+        "Common <color=#999999FF>Neutral</color>",
+        "Random <color=#999999FF>Neutral</color>",
         "<color=#FF0000FF>Imp</color> Concealing",
         "<color=#FF0000FF>Imp</color> Killing",
         "<color=#FF0000FF>Imp</color> Support",
+        "Common <color=#FF0000FF>Imp</color>",
+        "Random <color=#FF0000FF>Imp</color>",
+        "Non-<color=#FF0000FF>Imp</color>",
         "Any"
     ];
 
@@ -47,91 +47,91 @@ public sealed class RoleOptions : AbstractOptionGroup
     public bool RoleListEnabled { get; set; } = true;
 
     public ModdedEnumOption Slot1 { get; } =
-        new("Slot 1", (int)RoleListOption.CrewCommon, typeof(RoleListOption), OptionStrings)
+        new("Slot 1", (int)RoleListOption.NonImp, typeof(RoleListOption), OptionStrings)
         {
             Visible = () => OptionGroupSingleton<RoleOptions>.Instance.RoleListEnabled
         };
 
     public ModdedEnumOption Slot2 { get; } =
-        new("Slot 2", (int)RoleListOption.CrewCommon, typeof(RoleListOption), OptionStrings)
+        new("Slot 2", (int)RoleListOption.NonImp, typeof(RoleListOption), OptionStrings)
         {
             Visible = () => OptionGroupSingleton<RoleOptions>.Instance.RoleListEnabled
         };
 
     public ModdedEnumOption Slot3 { get; } =
-        new("Slot 3", (int)RoleListOption.CrewCommon, typeof(RoleListOption), OptionStrings)
+        new("Slot 3", (int)RoleListOption.NonImp, typeof(RoleListOption), OptionStrings)
         {
             Visible = () => OptionGroupSingleton<RoleOptions>.Instance.RoleListEnabled
         };
 
     public ModdedEnumOption Slot4 { get; } =
-        new("Slot 4", (int)RoleListOption.ImpCommon, typeof(RoleListOption), OptionStrings)
+        new("Slot 4", (int)RoleListOption.ImpRandom, typeof(RoleListOption), OptionStrings)
         {
             Visible = () => OptionGroupSingleton<RoleOptions>.Instance.RoleListEnabled
         };
 
     public ModdedEnumOption Slot5 { get; } =
-        new("Slot 5", (int)RoleListOption.CrewCommon, typeof(RoleListOption), OptionStrings)
+        new("Slot 5", (int)RoleListOption.NonImp, typeof(RoleListOption), OptionStrings)
         {
             Visible = () => OptionGroupSingleton<RoleOptions>.Instance.RoleListEnabled
         };
 
     public ModdedEnumOption Slot6 { get; } =
-        new("Slot 6", (int)RoleListOption.CrewCommon, typeof(RoleListOption), OptionStrings)
+        new("Slot 6", (int)RoleListOption.NonImp, typeof(RoleListOption), OptionStrings)
         {
             Visible = () => OptionGroupSingleton<RoleOptions>.Instance.RoleListEnabled
         };
 
     public ModdedEnumOption Slot7 { get; } =
-        new("Slot 7", (int)RoleListOption.CrewCommon, typeof(RoleListOption), OptionStrings)
+        new("Slot 7", (int)RoleListOption.NonImp, typeof(RoleListOption), OptionStrings)
         {
             Visible = () => OptionGroupSingleton<RoleOptions>.Instance.RoleListEnabled
         };
 
     public ModdedEnumOption Slot8 { get; } =
-        new("Slot 8", (int)RoleListOption.CrewCommon, typeof(RoleListOption), OptionStrings)
+        new("Slot 8", (int)RoleListOption.NonImp, typeof(RoleListOption), OptionStrings)
         {
             Visible = () => OptionGroupSingleton<RoleOptions>.Instance.RoleListEnabled
         };
 
     public ModdedEnumOption Slot9 { get; } =
-        new("Slot 9", (int)RoleListOption.ImpCommon, typeof(RoleListOption), OptionStrings)
+        new("Slot 9", (int)RoleListOption.ImpRandom, typeof(RoleListOption), OptionStrings)
         {
             Visible = () => OptionGroupSingleton<RoleOptions>.Instance.RoleListEnabled
         };
 
     public ModdedEnumOption Slot10 { get; } =
-        new("Slot 10", (int)RoleListOption.CrewCommon, typeof(RoleListOption), OptionStrings)
+        new("Slot 10", (int)RoleListOption.NonImp, typeof(RoleListOption), OptionStrings)
         {
             Visible = () => OptionGroupSingleton<RoleOptions>.Instance.RoleListEnabled
         };
 
     public ModdedEnumOption Slot11 { get; } =
-        new("Slot 11", (int)RoleListOption.CrewCommon, typeof(RoleListOption), OptionStrings)
+        new("Slot 11", (int)RoleListOption.NonImp, typeof(RoleListOption), OptionStrings)
         {
             Visible = () => OptionGroupSingleton<RoleOptions>.Instance.RoleListEnabled
         };
 
     public ModdedEnumOption Slot12 { get; } =
-        new("Slot 12", (int)RoleListOption.CrewCommon, typeof(RoleListOption), OptionStrings)
+        new("Slot 12", (int)RoleListOption.NonImp, typeof(RoleListOption), OptionStrings)
         {
             Visible = () => OptionGroupSingleton<RoleOptions>.Instance.RoleListEnabled
         };
 
     public ModdedEnumOption Slot13 { get; } =
-        new("Slot 13", (int)RoleListOption.CrewCommon, typeof(RoleListOption), OptionStrings)
+        new("Slot 13", (int)RoleListOption.NonImp, typeof(RoleListOption), OptionStrings)
         {
             Visible = () => OptionGroupSingleton<RoleOptions>.Instance.RoleListEnabled
         };
 
     public ModdedEnumOption Slot14 { get; } =
-        new("Slot 14", (int)RoleListOption.ImpCommon, typeof(RoleListOption), OptionStrings)
+        new("Slot 14", (int)RoleListOption.ImpRandom, typeof(RoleListOption), OptionStrings)
         {
             Visible = () => OptionGroupSingleton<RoleOptions>.Instance.RoleListEnabled
         };
 
     public ModdedEnumOption Slot15 { get; } =
-        new("Slot 15", (int)RoleListOption.CrewCommon, typeof(RoleListOption), OptionStrings)
+        new("Slot 15", (int)RoleListOption.NonImp, typeof(RoleListOption), OptionStrings)
         {
             Visible = () => OptionGroupSingleton<RoleOptions>.Instance.RoleListEnabled
         };
@@ -175,24 +175,24 @@ public sealed class RoleOptions : AbstractOptionGroup
 
 public enum RoleListOption
 {
-    CrewCommon,
-    CrewRandom,
     CrewInvest,
     CrewKilling,
     CrewProtective,
     CrewPower,
     CrewSupport,
+    CrewCommon,
     CrewSpecial,
-    NonImp,
-    NeutCommon,
-    NeutRandom,
+    CrewRandom,
     NeutBenign,
     NeutEvil,
     NeutKilling,
-    ImpCommon,
-    ImpRandom,
+    NeutCommon,
+    NeutRandom,
     ImpConceal,
     ImpKilling,
     ImpSupport,
+    ImpCommon,
+    ImpRandom,
+    NonImp,
     Any
 }

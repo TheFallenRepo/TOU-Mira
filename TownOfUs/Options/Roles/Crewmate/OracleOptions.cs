@@ -9,11 +9,11 @@ public sealed class OracleOptions : AbstractOptionGroup<OracleRole>
 {
     public override string GroupName => "Oracle";
 
-    [ModdedNumberOption("Confess Cooldown", 1f, 30f, 1f, MiraNumberSuffixes.Seconds)]
-    public float ConfessCooldown { get; set; } = 20f;
+    [ModdedNumberOption("Confess Cooldown", 1f, 15f, 1f, MiraNumberSuffixes.Seconds)]
+    public float ConfessCooldown { get; set; } = 10f;
 
-    [ModdedNumberOption("Bless Cooldown", 10f, 60f, 2.5f, MiraNumberSuffixes.Seconds)]
-    public float BlessCooldown { get; set; } = 25f;
+    [ModdedNumberOption("Bless Cooldown", 1f, 15f, 1f, MiraNumberSuffixes.Seconds)]
+    public float BlessCooldown { get; set; } = 10f;
 
     [ModdedNumberOption("Reveal Accuracy", 0f, 100f, suffixType: MiraNumberSuffixes.Percent)]
     public float RevealAccuracyPercentage { get; set; } = 80f;

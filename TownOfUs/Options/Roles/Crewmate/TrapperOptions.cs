@@ -11,11 +11,11 @@ public sealed class TrapperOptions : AbstractOptionGroup<TrapperRole>
 {
     public override string GroupName => TouLocale.Get(TouNames.Trapper, "Trapper");
 
-    [ModdedNumberOption("Trap Cooldown", 1f, 30f, 1f, MiraNumberSuffixes.Seconds)]
-    public float TrapCooldown { get; set; } = 20f;
+    [ModdedNumberOption("Trap Cooldown", 1f, 15f, 1f, MiraNumberSuffixes.Seconds)]
+    public float TrapCooldown { get; set; } = 10f;
 
     [ModdedNumberOption("Min Amount Of Time In Trap To Register", 0f, 15f, 0.5f, MiraNumberSuffixes.Seconds)]
-    public float MinAmountOfTimeInTrap { get; set; } = 5f;
+    public float MinAmountOfTimeInTrap { get; set; } = 1f;
 
     [ModdedNumberOption("Max Number Of Traps", 1f, 15f, 1f, MiraNumberSuffixes.None, "0")]
     public float MaxTraps { get; set; } = 5f;
@@ -31,6 +31,6 @@ public sealed class TrapperOptions : AbstractOptionGroup<TrapperRole>
         Visible = () => !OptionGroupSingleton<TrapperOptions>.Instance.TrapsRemoveOnNewRound
     };
 
-    [ModdedNumberOption("Minimum Number Of Roles Required To Trigger Trap", 1f, 15f)]
+    [ModdedNumberOption("Minimum Number Of Roles Required To Trigger Trap", 1f, 5f)]
     public float MinAmountOfPlayersInTrap { get; set; } = 3f;
 }

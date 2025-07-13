@@ -1,25 +1,24 @@
 ﻿using MiraAPI.GameOptions;
-using MiraAPI.Hud;
 using MiraAPI.Modifiers;
 using MiraAPI.Utilities.Assets;
 using Reactor.Utilities;
 using TownOfUs.Modifiers;
-using TownOfUs.Modifiers.Game.Crewmate;
 using TownOfUs.Modifiers.Neutral;
-using TownOfUs.Options.Modifiers.Crewmate;
+using TownOfUs.Options.Roles.Crewmate;
+using TownOfUs.Roles.Crewmate;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace TownOfUs.Buttons.Modifiers;
+namespace TownOfUs.Buttons.Crewmates;
 
-public sealed class SecurityButton : TownOfUsButton
+public sealed class SecurityButton : TownOfUsRoleButton<OperativeRole>
 {
     public Minigame? securityMinigame;
     public override string Name => "Security";
-    public override string Keybind => Keybinds.ModifierAction;
+    public override string Keybind => Keybinds.SecondaryAction;
     public override Color TextOutlineColor => TownOfUsColors.Operative;
     public override float Cooldown => OptionGroupSingleton<OperativeOptions>.Instance.DisplayCooldown + MapCooldown;
-    public float AvailableCharge { get; set; } = OptionGroupSingleton<OperativeOptions>.Instance.StartingCharge;
+    public float AvailableCharge { get; set; } = OptionGroupSingleton<OperativeOptions>.Instance.StartingCamerasCharge;
 
     public override float EffectDuration
     {
@@ -36,14 +35,13 @@ public sealed class SecurityButton : TownOfUsButton
         }
     }
 
-    public override ButtonLocation Location => ButtonLocation.BottomLeft;
     public override LoadableAsset<Sprite> Sprite => TouAssets.CameraSprite;
     public bool canMoveWithMinigame { get; set; }
 
     public override bool Enabled(RoleBehaviour? role)
     {
         return PlayerControl.LocalPlayer != null &&
-               PlayerControl.LocalPlayer.HasModifier<OperativeModifier>() &&
+               PlayerControl.LocalPlayer.Data.Role is OperativeRole &&
                !PlayerControl.LocalPlayer.Data.IsDead;
     }
 
@@ -53,7 +51,7 @@ public sealed class SecurityButton : TownOfUsButton
         // this is so you can see it through cams
         Button!.transform.localPosition =
             new Vector3(Button.transform.localPosition.x, Button.transform.localPosition.y, -150f);
-        AvailableCharge = OptionGroupSingleton<OperativeOptions>.Instance.StartingCharge;
+        AvailableCharge = OptionGroupSingleton<OperativeOptions>.Instance.StartingCamerasCharge;
     }
 
     private void RefreshAbilityButton()
@@ -166,11 +164,8 @@ public sealed class SecurityButton : TownOfUsButton
             // Logger<TownOfUsPlugin>.Warning($"Checking Mira HQ Conditions");
             basicCams = Object.FindObjectsOfType<SystemConsole>()
                 .FirstOrDefault(x => x.gameObject.name.Contains("SurvLogConsole"));
-            if (!OptionGroupSingleton<OperativeOptions>.Instance.MoveOnMira)
-            {
-                PlayerControl.LocalPlayer.NetTransform.Halt();
-                canMoveWithMinigame = false;
-            }
+            PlayerControl.LocalPlayer.NetTransform.Halt();
+            canMoveWithMinigame = false;
         }
         else if (mapId is MapNames.Fungle)
         {

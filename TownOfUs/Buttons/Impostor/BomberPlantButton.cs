@@ -9,12 +9,11 @@ namespace TownOfUs.Buttons.Impostor;
 
 public sealed class BomberPlantButton : TownOfUsRoleButton<BomberRole>, IAftermathableButton, IDiseaseableButton
 {
-    public override string Name => "Place";
+    public override string Name => "Plant";
     public override string Keybind => Keybinds.SecondaryAction;
     public override Color TextOutlineColor => TownOfUsColors.Impostor;
     public override float Cooldown => PlayerControl.LocalPlayer.GetKillCooldown() + MapCooldown;
     public override float EffectDuration => OptionGroupSingleton<BomberOptions>.Instance.DetonateDelay;
-    public override int MaxUses => (int)OptionGroupSingleton<BomberOptions>.Instance.MaxBombs;
     public override LoadableAsset<Sprite> Sprite => TouImpAssets.PlaceSprite;
 
     public void SetDiseasedTimer(float multiplier)

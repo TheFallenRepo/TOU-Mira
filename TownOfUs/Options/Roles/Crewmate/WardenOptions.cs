@@ -8,7 +8,7 @@ public sealed class WardenOptions : AbstractOptionGroup<WardenRole>
 {
     public override string GroupName => "Warden";
 
-    [ModdedEnumOption("Show Fortify Player", typeof(FortifyOptions), ["Self", "Warden", "Self + Warden", "Everyone"])]
+    [ModdedEnumOption("Show Fortify Player", typeof(FortifyOptions), ["Self", "Warden", "Self + Warden"])]
     public FortifyOptions ShowFortified { get; set; } = FortifyOptions.SelfAndWarden;
 }
 
@@ -16,6 +16,5 @@ public enum FortifyOptions
 {
     Self,
     Warden,
-    SelfAndWarden,
-    Everyone
+    SelfAndWarden
 }

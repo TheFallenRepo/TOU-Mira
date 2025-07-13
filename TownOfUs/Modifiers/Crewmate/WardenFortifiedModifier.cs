@@ -35,10 +35,9 @@ public sealed class WardenFortifiedModifier(PlayerControl warden) : BaseShieldMo
         get
         {
             var show = OptionGroupSingleton<WardenOptions>.Instance.ShowFortified;
-            var showShieldedEveryone = show == FortifyOptions.Everyone;
             var showShieldedSelf = PlayerControl.LocalPlayer.PlayerId == Player.PlayerId &&
                                    show is FortifyOptions.Self or FortifyOptions.SelfAndWarden;
-            return showShieldedSelf || showShieldedEveryone;
+            return showShieldedSelf;
         }
     }
 
@@ -49,11 +48,10 @@ public sealed class WardenFortifiedModifier(PlayerControl warden) : BaseShieldMo
         base.OnActivate();
         var touAbilityEvent = new TouAbilityEvent(AbilityType.WardenFortify, Warden, Player);
         MiraEventManager.InvokeEvent(touAbilityEvent);
-        
+
         var genOpt = OptionGroupSingleton<GeneralOptions>.Instance;
         var show = OptionGroupSingleton<WardenOptions>.Instance.ShowFortified;
 
-        var showShieldedEveryone = show == FortifyOptions.Everyone;
         var showShieldedSelf = PlayerControl.LocalPlayer.PlayerId == Player.PlayerId &&
                                show is FortifyOptions.Self or FortifyOptions.SelfAndWarden;
         var showShieldedWarden = PlayerControl.LocalPlayer.PlayerId == Warden.PlayerId &&
@@ -63,9 +61,9 @@ public sealed class WardenFortifiedModifier(PlayerControl warden) : BaseShieldMo
             x.ParentId == PlayerControl.LocalPlayer.PlayerId && !TutorialManager.InstanceExists);
         var fakePlayer = FakePlayer.FakePlayers.FirstOrDefault(x =>
             x.PlayerId == PlayerControl.LocalPlayer.PlayerId && !TutorialManager.InstanceExists);
-        
-        ShowFort = showShieldedEveryone || showShieldedSelf || showShieldedWarden || (PlayerControl.LocalPlayer.HasDied() && genOpt.TheDeadKnow && !body && !fakePlayer?.body);
-        
+
+        ShowFort = showShieldedSelf || showShieldedWarden || (PlayerControl.LocalPlayer.HasDied() && genOpt.TheDeadKnow && !body && !fakePlayer?.body);
+
         WardenFort = AnimStore.SpawnAnimBody(Player, TouAssets.WardenFort.LoadAsset(), false, -1.1f, -0.35f, 1.5f)!;
         WardenFort.GetComponent<SpriteAnim>().SetSpeed(0.75f);
         WardenFort.GetComponentsInChildren<SpriteAnim>().FirstOrDefault()?.SetSpeed(0.75f);
@@ -78,7 +76,7 @@ public sealed class WardenFortifiedModifier(PlayerControl warden) : BaseShieldMo
             WardenFort.gameObject.Destroy();
         }
     }
-    
+
     public override void Update()
     {
         if (!MeetingHud.Instance && WardenFort?.gameObject != null)

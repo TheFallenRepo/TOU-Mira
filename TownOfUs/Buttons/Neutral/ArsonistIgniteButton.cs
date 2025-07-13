@@ -26,17 +26,12 @@ public sealed class ArsonistIgniteButton : TownOfUsRoleButton<ArsonistRole>
     public override LoadableAsset<Sprite> Sprite => TouNeutAssets.IgniteButtonSprite;
 
     private static List<PlayerControl> PlayersInRange => Helpers.GetClosestPlayers(PlayerControl.LocalPlayer,
-        OptionGroupSingleton<ArsonistOptions>.Instance.IgniteRadius.Value * ShipStatus.Instance.MaxLightRadius);
+        OptionGroupSingleton<ArsonistOptions>.Instance.IgniteRadius * ShipStatus.Instance.MaxLightRadius);
 
     public Ignite? Ignite { get; set; }
 
     public override bool CanUse()
     {
-        if (OptionGroupSingleton<ArsonistOptions>.Instance.LegacyArsonist)
-        {
-            return base.CanUse() && ClosestTarget != null;
-        }
-
         var count = PlayersInRange.Count(x => x.HasModifier<ArsonistDousedModifier>());
 
         if (count > 0 && !PlayerControl.LocalPlayer.HasDied() && Timer <= 0)
@@ -69,11 +64,6 @@ public sealed class ArsonistIgniteButton : TownOfUsRoleButton<ArsonistRole>
     {
         PlayerControl.LocalPlayer.RpcAddModifier<IndirectAttackerModifier>(false);
         var dousedPlayers = PlayersInRange.Where(x => x.HasModifier<ArsonistDousedModifier>()).ToList();
-        if (OptionGroupSingleton<ArsonistOptions>.Instance.LegacyArsonist)
-        {
-            dousedPlayers = PlayerControl.AllPlayerControls.ToArray()
-                .Where(x => x.HasModifier<ArsonistDousedModifier>()).ToList();
-        }
 
         foreach (var doused in dousedPlayers)
         {
@@ -102,7 +92,7 @@ public sealed class ArsonistIgniteButton : TownOfUsRoleButton<ArsonistRole>
     protected override void FixedUpdate(PlayerControl playerControl)
     {
         base.FixedUpdate(playerControl);
-        if (MeetingHud.Instance || !OptionGroupSingleton<ArsonistOptions>.Instance.LegacyArsonist)
+        if (MeetingHud.Instance)
         {
             return;
         }

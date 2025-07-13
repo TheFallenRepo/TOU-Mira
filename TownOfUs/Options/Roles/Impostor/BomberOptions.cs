@@ -11,9 +11,6 @@ public sealed class BomberOptions : AbstractOptionGroup<BomberRole>
 {
     public override string GroupName => TouLocale.Get(TouNames.Bomber, "Bomber");
 
-    [ModdedNumberOption("Bomb Uses Per Game", 0f, 15f, 1f, MiraNumberSuffixes.None, "0", true)]
-    public float MaxBombs { get; set; } = 3f;
-
     [ModdedNumberOption("Detonate Delay", 1f, 15f, 1f, MiraNumberSuffixes.Seconds)]
     public float DetonateDelay { get; set; } = 5f;
 
@@ -24,8 +21,8 @@ public sealed class BomberOptions : AbstractOptionGroup<BomberRole>
     public float MaxKillsInDetonation { get; set; } = 5f;
 
     [ModdedToggleOption("All Impostors See Bomb")]
-    public bool AllImpsSeeBomb { get; set; } = true;
+    public bool AllImpsSeeBomb { get; set; } = false;
 
-    [ModdedToggleOption("Can Vent")]
-    public bool BomberVent { get; set; } = true;
+    [ModdedToggleOption("Bomber Can Vent")]
+    public bool BomberVent { get; set; } = false;
 }

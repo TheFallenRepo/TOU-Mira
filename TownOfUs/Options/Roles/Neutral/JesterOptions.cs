@@ -1,5 +1,6 @@
 ﻿using MiraAPI.GameOptions;
 using MiraAPI.GameOptions.Attributes;
+using MiraAPI.GameOptions.OptionTypes;
 using MiraAPI.Utilities;
 using TownOfUs.Modules.Localization;
 using TownOfUs.Roles.Neutral;
@@ -22,8 +23,11 @@ public sealed class JesterOptions : AbstractOptionGroup<JesterRole>
     [ModdedToggleOption("Scatter Mechanic Enabled")]
     public bool ScatterOn { get; set; } = true;
 
-    [ModdedNumberOption("Scatter Timer", 10f, 60f, 2.5f, MiraNumberSuffixes.Seconds, "0.0")]
-    public float ScatterTimer { get; set; } = 25f;
+    public ModdedNumberOption ScatterTimer { get; set; } = new("Jester Scatter Timer", 25f, 10f, 60f, 2.5f,
+        MiraNumberSuffixes.Seconds, "0.0")
+    {
+        Visible = () => !OptionGroupSingleton<JesterOptions>.Instance.ScatterOn
+    };
 
     [ModdedEnumOption("After Win Type", typeof(JestWinOptions), ["Ends Game", "Haunts", "Nothing"])]
     public JestWinOptions JestWin { get; set; } = JestWinOptions.EndsGame;

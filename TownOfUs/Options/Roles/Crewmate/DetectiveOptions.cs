@@ -16,7 +16,7 @@ public sealed class DetectiveOptions : AbstractOptionGroup<DetectiveRole>
     [ModdedToggleOption("Show Detective Reports")]
     public bool DetectiveReportOn { get; set; } = true;
 
-    public ModdedNumberOption DetectiveRoleDuration { get; set; } = new("Time Where Detective Will Have Role", 7.5f, 0f,
+    public ModdedNumberOption DetectiveRoleDuration { get; set; } = new("Time Where Detective Will Have Role", 15f, 0f,
         60f, 2.5f, MiraNumberSuffixes.Seconds)
     {
         Visible = () => OptionGroupSingleton<DetectiveOptions>.Instance.DetectiveReportOn

@@ -1,7 +1,5 @@
 using HarmonyLib;
 using MiraAPI.GameOptions;
-using MiraAPI.Modifiers;
-using TownOfUs.Modifiers.Game.Crewmate;
 using TownOfUs.Options.Roles.Crewmate;
 using TownOfUs.Roles.Crewmate;
 using TownOfUs.Utilities;
@@ -116,7 +114,7 @@ public static class SpyMapCountOverlayPatch
     public static bool MapCountOverlayUpdatePatch(MapCountOverlay __instance)
     {
         var localPlayer = PlayerControl.LocalPlayer;
-        var isSpy = localPlayer.IsRole<SpyRole>() || localPlayer.HasModifier<SpyModifier>();
+        var isSpy = localPlayer.IsRole<SpyRole>();
 
         __instance.timer += Time.deltaTime;
         if (__instance.timer < 0.1f)

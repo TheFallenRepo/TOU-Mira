@@ -1,9 +1,7 @@
 ﻿using System.Text;
 using Il2CppInterop.Runtime.Attributes;
-using MiraAPI.GameOptions;
 using MiraAPI.Roles;
 using TownOfUs.Modules.Wiki;
-using TownOfUs.Options.Roles.Impostor;
 using TownOfUs.Utilities;
 using UnityEngine;
 
@@ -21,8 +19,7 @@ public sealed class GrenadierRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOf
 
     public CustomRoleConfiguration Configuration => new(this)
     {
-        Icon = TouRoleIcons.Grenadier,
-        CanUseVent = OptionGroupSingleton<GrenadierOptions>.Instance.CanVent
+        Icon = TouRoleIcons.Grenadier
     };
 
     [HideFromIl2Cpp]

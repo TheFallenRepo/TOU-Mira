@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Text;
 using AmongUs.GameOptions;
 using HarmonyLib;
@@ -6,11 +5,9 @@ using Il2CppInterop.Runtime.Attributes;
 using MiraAPI.GameOptions;
 using MiraAPI.Hud;
 using MiraAPI.Modifiers;
-using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
 using MiraAPI.Utilities;
 using Reactor.Networking.Attributes;
-using Reactor.Utilities;
 using TownOfUs.Buttons.Neutral;
 using TownOfUs.Modifiers.Neutral;
 using TownOfUs.Modules.Wiki;
@@ -18,7 +15,6 @@ using TownOfUs.Options.Roles.Neutral;
 using TownOfUs.Roles.Crewmate;
 using TownOfUs.Utilities;
 using UnityEngine;
-using Random = System.Random;
 
 namespace TownOfUs.Roles.Neutral;
 
@@ -122,30 +118,6 @@ public sealed class PlaguebearerRole(IntPtr cppPtr)
             "Infect a player, causing them to be infected. When a infected player or dead body interacts or get interacted with the infection will spread to all non-infected players.",
             TouNeutAssets.InfectSprite)
     ];
-
-    public override void Initialize(PlayerControl player)
-    {
-        RoleBehaviourStubs.Initialize(this, player);
-        if (Player.AmOwner && (int)OptionGroupSingleton<PlaguebearerOptions>.Instance.PestChance != 0)
-        {
-            Coroutines.Start(CheckForPestChance(Player));
-        }
-    }
-
-    private static IEnumerator CheckForPestChance(PlayerControl player)
-    {
-        yield return new WaitForSeconds(0.01f);
-
-        Random rnd = new();
-        var chance = rnd.Next(1, 101);
-
-        if (chance <= OptionGroupSingleton<PlaguebearerOptions>.Instance.PestChance)
-        {
-            player.RpcChangeRole(RoleId.Get<PestilenceRole>());
-            CustomButtonSingleton<PestilenceKillButton>.Instance.SetTimer(OptionGroupSingleton<PlaguebearerOptions>
-                .Instance.PestKillCooldown);
-        }
-    }
 
     public override bool CanUse(IUsable usable)
     {

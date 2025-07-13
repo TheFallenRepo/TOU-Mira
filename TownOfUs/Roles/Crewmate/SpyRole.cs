@@ -1,12 +1,7 @@
 ﻿using System.Text;
 using Il2CppInterop.Runtime.Attributes;
-using MiraAPI.GameOptions;
-using MiraAPI.Hud;
-using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
-using TownOfUs.Buttons.Crewmate;
 using TownOfUs.Modules.Wiki;
-using TownOfUs.Options.Roles.Crewmate;
 using TownOfUs.Utilities;
 using UnityEngine;
 
@@ -39,27 +34,5 @@ public sealed class SpyRole(IntPtr cppPtr) : CrewmateRole(cppPtr), ITownOfUsRole
         return
             "The Spy is a Crewmate Investigative role that gains extra information on the admin table. They not only see how many people are in a room, but will also see who is in every room."
             + MiscUtils.AppendOptionsText(GetType());
-    }
-
-    public override void Initialize(PlayerControl player)
-    {
-        RoleBehaviourStubs.Initialize(this, player);
-        if (Player.AmOwner)
-        {
-            CustomButtonSingleton<SpyAdminTableRoleButton>.Instance.AvailableCharge =
-                OptionGroupSingleton<SpyOptions>.Instance.StartingCharge.Value;
-        }
-    }
-
-    public static void OnRoundStart()
-    {
-        CustomButtonSingleton<SpyAdminTableRoleButton>.Instance.AvailableCharge +=
-            OptionGroupSingleton<SpyOptions>.Instance.RoundCharge.Value;
-    }
-
-    public static void OnTaskComplete()
-    {
-        CustomButtonSingleton<SpyAdminTableRoleButton>.Instance.AvailableCharge +=
-            OptionGroupSingleton<SpyOptions>.Instance.TaskCharge.Value;
     }
 }

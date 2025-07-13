@@ -69,10 +69,10 @@ public sealed class TownOfUsMapOptions : AbstractOptionGroup
     [ModdedNumberOption("Skeld/Mira Increased Long Tasks", 0f, 3f)]
     public float SmallMapIncreasedLongTasks { get; set; } = 0f;
 
-    [ModdedNumberOption("Airship/Submerged Decreased Short Tasks", 0f, 5f)]
+    [ModdedNumberOption("Airship/Fungle Decreased Short Tasks", 0f, 5f)]
     public float LargeMapDecreasedShortTasks { get; set; } = 0f;
 
-    [ModdedNumberOption("Airship/Submerged Decreased Long Tasks", 0f, 3f)]
+    [ModdedNumberOption("Airship/Fungle Decreased Long Tasks", 0f, 3f)]
     public float LargeMapDecreasedLongTasks { get; set; } = 0f;
 
     // MapNames 6 is Submerged
@@ -81,7 +81,7 @@ public sealed class TownOfUsMapOptions : AbstractOptionGroup
         return (MapNames)GameOptionsManager.Instance.currentNormalGameOptions.MapId switch
         {
             MapNames.MiraHQ => -SmallMapDecreasedCooldown,
-            MapNames.Airship or (MapNames)6 => LargeMapIncreasedCooldown,
+            MapNames.Airship or MapNames.Fungle => LargeMapIncreasedCooldown,
             _ => 0
         };
     }
@@ -91,7 +91,7 @@ public sealed class TownOfUsMapOptions : AbstractOptionGroup
         return (MapNames)GameOptionsManager.Instance.currentNormalGameOptions.MapId switch
         {
             MapNames.MiraHQ or MapNames.Skeld or MapNames.Dleks => (int)SmallMapIncreasedShortTasks,
-            MapNames.Airship or (MapNames)6 => -(int)LargeMapDecreasedShortTasks,
+            MapNames.Airship or MapNames.Fungle => -(int)LargeMapDecreasedShortTasks,
             _ => 0
         };
     }
@@ -101,7 +101,7 @@ public sealed class TownOfUsMapOptions : AbstractOptionGroup
         return (MapNames)GameOptionsManager.Instance.currentNormalGameOptions.MapId switch
         {
             MapNames.MiraHQ or MapNames.Skeld or MapNames.Dleks => (int)SmallMapIncreasedLongTasks,
-            MapNames.Airship or (MapNames)6 => -(int)LargeMapDecreasedLongTasks,
+            MapNames.Airship or MapNames.Fungle => -(int)LargeMapDecreasedLongTasks,
             _ => 0
         };
     }

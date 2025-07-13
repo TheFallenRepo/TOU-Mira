@@ -15,7 +15,7 @@ public sealed class ExecutionerOptions : AbstractOptionGroup<ExecutionerRole>
     public bool CanButton { get; set; } = true;
 
     [ModdedEnumOption("Executioner Win", typeof(ExeWinOptions), ["Ends Game", "Leaves & Torments", "Nothing"])]
-    public ExeWinOptions ExeWin { get; set; } = ExeWinOptions.Torments;
+    public ExeWinOptions ExeWin { get; set; } = ExeWinOptions.EndsGame;
 }
 
 public enum ExeWinOptions

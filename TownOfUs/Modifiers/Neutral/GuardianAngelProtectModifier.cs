@@ -40,9 +40,8 @@ public sealed class GuardianAngelProtectModifier(PlayerControl guardianAngel) : 
         var showProtect = OptionGroupSingleton<GuardianAngelOptions>.Instance.ShowProtect;
         var ga = CustomRoleUtils.GetActiveRolesOfType<GuardianAngelTouRole>().FirstOrDefault(x => x.Target == Player);
 
-        var showProtectEveryone = showProtect == ProtectOptions.Everyone;
         var showProtectSelf = PlayerControl.LocalPlayer.PlayerId == Player.PlayerId &&
-                              showProtect is ProtectOptions.SelfAndGA;
+                              (showProtect is ProtectOptions.SelfAndGA || showProtect is ProtectOptions.Self);
         var showProtectGA = PlayerControl.LocalPlayer.PlayerId == ga?.Player.PlayerId &&
                             showProtect is ProtectOptions.GA or ProtectOptions.SelfAndGA;
 
@@ -50,8 +49,8 @@ public sealed class GuardianAngelProtectModifier(PlayerControl guardianAngel) : 
             x.ParentId == PlayerControl.LocalPlayer.PlayerId && !TutorialManager.InstanceExists);
         var fakePlayer = FakePlayer.FakePlayers.FirstOrDefault(x =>
             x.PlayerId == PlayerControl.LocalPlayer.PlayerId && !TutorialManager.InstanceExists);
-        
-        if (showProtectEveryone || showProtectSelf || showProtectGA || (PlayerControl.LocalPlayer.HasDied() && genOpt.TheDeadKnow && !body && !fakePlayer?.body))
+
+        if (showProtectSelf || showProtectGA || (PlayerControl.LocalPlayer.HasDied() && genOpt.TheDeadKnow && !body && !fakePlayer?.body))
         {
             var roleEffectAnimation = Object.Instantiate(DestroyableSingleton<RoleManager>.Instance.protectLoopAnim,
                 Player.gameObject.transform);

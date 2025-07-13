@@ -10,14 +10,14 @@ public sealed class DoomsayerOptions : AbstractOptionGroup<DoomsayerRole>
 {
     public override string GroupName => "Doomsayer";
 
-    [ModdedNumberOption("Observe Cooldown", 1f, 30f, 1f, MiraNumberSuffixes.Seconds)]
-    public float ObserveCooldown { get; set; } = 20f;
+    [ModdedNumberOption("Observe Cooldown", 1f, 15f, 1f, MiraNumberSuffixes.Seconds)]
+    public float ObserveCooldown { get; set; } = 10f;
 
     [ModdedNumberOption("Number Of Guesses Needed To Win", 2f, 5f, 1f, MiraNumberSuffixes.None, "0")]
     public float DoomsayerGuessesToWin { get; set; } = 3f;
 
     [ModdedToggleOption("Doomsayer Guesses All Roles At Once")]
-    public bool DoomsayerGuessAllAtOnce { get; set; } = false;
+    public bool DoomsayerGuessAllAtOnce { get; set; } = true;
 
     public ModdedToggleOption DoomsayerKillOnlyLast { get; set; } = new("Kill Only The Last Victim", false)
     {
@@ -27,13 +27,12 @@ public sealed class DoomsayerOptions : AbstractOptionGroup<DoomsayerRole>
     [ModdedToggleOption("Doomsayer Can't Observe")]
     public bool CantObserve { get; set; } = false;
 
-    [ModdedEnumOption("Doomsayer Win", typeof(DoomWinOptions), ["Ends Game", "Leaves In Victory", "Nothing"])]
+    [ModdedEnumOption("Doomsayer Win", typeof(DoomWinOptions), ["Ends Game", "Leaves In Victory"])]
     public DoomWinOptions DoomWin { get; set; } = DoomWinOptions.Leaves;
 }
 
 public enum DoomWinOptions
 {
     EndsGame,
-    Leaves,
-    Nothing
+    Leaves
 }

@@ -17,7 +17,6 @@ public sealed class SwooperSwoopButton : TownOfUsRoleButton<SwooperRole>, IAfter
     public override string Keybind => Keybinds.SecondaryAction;
     public override float Cooldown => OptionGroupSingleton<SwooperOptions>.Instance.SwoopCooldown + MapCooldown;
     public override float EffectDuration => OptionGroupSingleton<SwooperOptions>.Instance.SwoopDuration;
-    public override int MaxUses => (int)OptionGroupSingleton<SwooperOptions>.Instance.MaxSwoops;
     public override LoadableAsset<Sprite> Sprite => TouImpAssets.SwoopSprite;
 
     public override void ClickHandler()

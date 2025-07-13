@@ -56,7 +56,7 @@ public sealed class SurvivorRole(IntPtr cppPtr) : NeutralRole(cppPtr), ITownOfUs
 
         if (Player.AmOwner && OptionGroupSingleton<SurvivorOptions>.Instance.ScatterOn)
         {
-            Player.AddModifier<ScatterModifier>(OptionGroupSingleton<SurvivorOptions>.Instance.ScatterTimer);
+            Player.AddModifier<ScatterModifier>(OptionGroupSingleton<SurvivorOptions>.Instance.ScatterTimer.Value);
         }
     }
 

@@ -136,11 +136,6 @@ public sealed class InquisitorRole(IntPtr cppPtr) : NeutralRole(cppPtr), ITownOf
             return false;
         }
 
-        if (!OptionGroupSingleton<InquisitorOptions>.Instance.StallGame)
-        {
-            return false;
-        }
-
         if (!TargetsDead)
         {
             return false;

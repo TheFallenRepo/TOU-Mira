@@ -11,14 +11,13 @@ public sealed class UniversalModifierOptions : AbstractOptionGroup
     public override bool ShowInModifiersMenu => true;
     public override uint GroupPriority => 1;
 
-    [ModdedNumberOption("Button Barry Amount", 0, 1)]
+    [ModdedNumberOption("Button Barry Amount", 0, 5)]
     public float ButtonBarryAmount { get; set; } = 0;
 
-    public ModdedNumberOption ButtonBarryChance { get; } =
-        new("Button Barry Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
-        {
-            Visible = () => OptionGroupSingleton<UniversalModifierOptions>.Instance.ButtonBarryAmount > 0
-        };
+    public ModdedNumberOption ButtonBarryChance { get; } = new("Button Barry Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
+    {
+        Visible = () => OptionGroupSingleton<UniversalModifierOptions>.Instance.ButtonBarryAmount > 0
+    };
 
     [ModdedNumberOption("Flash Amount", 0, 5)]
     public float FlashAmount { get; set; } = 0;

@@ -18,7 +18,6 @@ public sealed class GrenadierFlashButton : TownOfUsRoleButton<GrenadierRole>, IA
     public override Color TextOutlineColor => TownOfUsColors.Impostor;
     public override float Cooldown => OptionGroupSingleton<GrenadierOptions>.Instance.GrenadeCooldown + MapCooldown;
     public override float EffectDuration => OptionGroupSingleton<GrenadierOptions>.Instance.GrenadeDuration;
-    public override int MaxUses => (int)OptionGroupSingleton<GrenadierOptions>.Instance.MaxFlashes;
     public override LoadableAsset<Sprite> Sprite => TouImpAssets.FlashSprite;
 
     protected override void OnClick()

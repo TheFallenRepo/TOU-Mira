@@ -216,11 +216,6 @@ public abstract class AssassinModifier : ExcludedGameModifier
             return false;
         }
 
-        if (touRole?.RoleAlignment == RoleAlignment.CrewmateInvestigative)
-        {
-            return options.AssassinGuessInvest;
-        }
-
         if (role.IsCrewmate() && role is ICustomRole)
         {
             return true;
@@ -278,12 +273,6 @@ public abstract class AssassinModifier : ExcludedGameModifier
         }
 
         if (!OptionGroupSingleton<AssassinOptions>.Instance.AssassinGuessCrewModifiers)
-        {
-            return false;
-        }
-
-        if (!OptionGroupSingleton<AssassinOptions>.Instance.AssassinGuessUtilityModifiers &&
-            modifier is TouGameModifier touMod2 && touMod2.FactionType == ModifierFaction.CrewmateUtility)
         {
             return false;
         }

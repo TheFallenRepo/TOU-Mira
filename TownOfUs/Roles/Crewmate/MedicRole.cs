@@ -3,14 +3,12 @@ using System.Text;
 using AmongUs.GameOptions;
 using Il2CppInterop.Runtime.Attributes;
 using MiraAPI.GameOptions;
-using MiraAPI.Hud;
 using MiraAPI.Modifiers;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
 using Reactor.Networking.Attributes;
 using Reactor.Utilities;
 using Reactor.Utilities.Extensions;
-using TownOfUs.Buttons.Crewmate;
 using TownOfUs.Modifiers.Crewmate;
 using TownOfUs.Modules;
 using TownOfUs.Modules.Localization;
@@ -310,12 +308,6 @@ public sealed class MedicRole(IntPtr cppPtr) : CrewmateRole(cppPtr), ITownOfUsRo
         Coroutines.Start(MiscUtils.CoFlash(new Color(0f, 0.5f, 0f, 1f)));
     }
 
-    public static void OnRoundStart()
-    {
-        CustomButtonSingleton<MedicShieldButton>.Instance.CanChangeTarget =
-            OptionGroupSingleton<MedicOptions>.Instance.ChangeTarget;
-    }
-
     [MethodRpc((uint)TownOfUsRpc.MedicShield, SendImmediately = true)]
     public static void RpcMedicShield(PlayerControl medic, PlayerControl target)
     {
@@ -376,11 +368,6 @@ public sealed class MedicRole(IntPtr cppPtr) : CrewmateRole(cppPtr), ITownOfUsRo
         }
 
         if (source.AmOwner)
-        {
-            DangerAnim();
-        }
-
-        if (shieldNotify == MedicOption.Everyone && !source.AmOwner)
         {
             DangerAnim();
         }

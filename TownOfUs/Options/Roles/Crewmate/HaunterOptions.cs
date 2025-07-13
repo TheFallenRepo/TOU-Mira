@@ -8,10 +8,10 @@ public sealed class HaunterOptions : AbstractOptionGroup<HaunterRole>
 {
     public override string GroupName => "Haunter";
 
-    [ModdedNumberOption("Tasks Left Before Clickable", 0f, 5)]
-    public float NumTasksLeftBeforeClickable { get; set; } = 3f;
+    [ModdedNumberOption("Tasks Left Before Clickable", 1f, 15)]
+    public float NumTasksLeftBeforeClickable { get; set; } = 5f;
 
-    [ModdedNumberOption("Tasks Left Before Alerted", 0f, 15)]
+    [ModdedNumberOption("Tasks Left Before Alerted", 1f, 15)]
     public float NumTasksLeftBeforeAlerted { get; set; } = 1f;
 
     [ModdedToggleOption("Reveal Neutral Roles")]

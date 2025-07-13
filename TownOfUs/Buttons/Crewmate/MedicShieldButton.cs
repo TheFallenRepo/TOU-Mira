@@ -1,7 +1,5 @@
-﻿using MiraAPI.GameOptions;
-using MiraAPI.Utilities.Assets;
+﻿using MiraAPI.Utilities.Assets;
 using Reactor.Utilities;
-using TownOfUs.Options.Roles.Crewmate;
 using TownOfUs.Roles.Crewmate;
 using TownOfUs.Utilities;
 using UnityEngine;
@@ -10,7 +8,7 @@ namespace TownOfUs.Buttons.Crewmate;
 
 public sealed class MedicShieldButton : TownOfUsRoleButton<MedicRole, PlayerControl>
 {
-    public bool CanChangeTarget = OptionGroupSingleton<MedicOptions>.Instance.ChangeTarget;
+    public bool CanChangeTarget = true;
     public override string Name => "Shield";
     public override string Keybind => Keybinds.SecondaryAction;
     public override Color TextOutlineColor => TownOfUsColors.Medic;

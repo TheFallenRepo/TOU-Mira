@@ -98,7 +98,8 @@ public static class PlayerRoleTextExtensions
             || (player.HasModifier<GuardianAngelTargetModifier>() &&
                 ((PlayerControl.LocalPlayer.HasDied() && genOpt.TheDeadKnow && !hidden)
                  || (player.AmOwner &&
-                     OptionGroupSingleton<GuardianAngelOptions>.Instance.ShowProtect is ProtectOptions.SelfAndGA))))
+                     (OptionGroupSingleton<GuardianAngelOptions>.Instance.ShowProtect is ProtectOptions.SelfAndGA ||
+                     OptionGroupSingleton<GuardianAngelOptions>.Instance.ShowProtect is ProtectOptions.Self)))))
         {
             name += player.HasModifier<GuardianAngelProtectModifier>()
                 ? "<color=#FFD900> ★</color>"

@@ -24,9 +24,7 @@ public sealed class ArsonistRole(IntPtr cppPtr) : NeutralRole(cppPtr), ITownOfUs
     public string RoleName => TouLocale.Get(TouNames.Arsonist, "Arsonist");
     public string RoleDescription => "Douse Players And Ignite The Light";
 
-    public string RoleLongDescription => OptionGroupSingleton<ArsonistOptions>.Instance.LegacyArsonist
-        ? "Douse players and ignite the closest one to kill all doused targets"
-        : "Douse players and ignite to kill all nearby doused targets";
+    public string RoleLongDescription => "Douse players and ignite to kill all nearby doused targets";
 
     public Color RoleColor => TownOfUsColors.Arsonist;
     public ModdedRoleTeams Team => ModdedRoleTeams.Custom;
@@ -77,9 +75,7 @@ public sealed class ArsonistRole(IntPtr cppPtr) : NeutralRole(cppPtr), ITownOfUs
     public string GetAdvancedDescription()
     {
         return $"The {RoleName} is a Neutral Killing role that wins by being the last killer alive. " +
-               (OptionGroupSingleton<ArsonistOptions>.Instance.LegacyArsonist
-                   ? "They can douse players and ignite one of them to ignite all doused players on the map."
-                   : "They can douse players and ignite them when close.") + MiscUtils.AppendOptionsText(GetType());
+               "They can douse players and ignite them when close." + MiscUtils.AppendOptionsText(GetType());
     }
 
     [HideFromIl2Cpp]
@@ -89,9 +85,7 @@ public sealed class ArsonistRole(IntPtr cppPtr) : NeutralRole(cppPtr), ITownOfUs
             "Douse a player in gasoline",
             TouNeutAssets.DouseButtonSprite),
         new("Ignite",
-            OptionGroupSingleton<ArsonistOptions>.Instance.LegacyArsonist
-                ? "Kill every doused player on the map as long as you ignite one player close by."
-                : "Kill multiple doused players around you, given that they are within your radius.",
+            "Kill multiple doused players around you, given that they are within your radius.",
             TouNeutAssets.IgniteButtonSprite)
     ];
 

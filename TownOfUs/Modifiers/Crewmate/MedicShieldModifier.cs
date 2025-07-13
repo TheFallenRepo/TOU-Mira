@@ -27,7 +27,7 @@ public sealed class MedicShieldModifier(PlayerControl medic) : BaseShieldModifie
         get
         {
             var showShielded = OptionGroupSingleton<MedicOptions>.Instance.ShowShielded;
-            return !TownOfUsPlugin.ShowShieldHud.Value || (showShielded is MedicOption.Medic or MedicOption.Nobody);
+            return !TownOfUsPlugin.ShowShieldHud.Value || showShielded is MedicOption.Medic;
         }
     }
 
@@ -36,10 +36,9 @@ public sealed class MedicShieldModifier(PlayerControl medic) : BaseShieldModifie
         get
         {
             var showShielded = OptionGroupSingleton<MedicOptions>.Instance.ShowShielded;
-            var showShieldedEveryone = showShielded == MedicOption.Everyone;
             var showShieldedSelf = PlayerControl.LocalPlayer.PlayerId == Player.PlayerId &&
                                    showShielded is MedicOption.Shielded or MedicOption.ShieldedAndMedic;
-            return showShieldedSelf || showShieldedEveryone;
+            return showShieldedSelf;
         }
     }
 
@@ -51,7 +50,6 @@ public sealed class MedicShieldModifier(PlayerControl medic) : BaseShieldModifie
         var genOpt = OptionGroupSingleton<GeneralOptions>.Instance;
         var showShielded = OptionGroupSingleton<MedicOptions>.Instance.ShowShielded;
 
-        var showShieldedEveryone = showShielded == MedicOption.Everyone;
         var showShieldedSelf = PlayerControl.LocalPlayer.PlayerId == Player.PlayerId &&
                                showShielded is MedicOption.Shielded or MedicOption.ShieldedAndMedic;
         var showShieldedMedic = PlayerControl.LocalPlayer.PlayerId == Medic.PlayerId &&
@@ -62,7 +60,7 @@ public sealed class MedicShieldModifier(PlayerControl medic) : BaseShieldModifie
         var fakePlayer = FakePlayer.FakePlayers.FirstOrDefault(x =>
             x.PlayerId == PlayerControl.LocalPlayer.PlayerId && !TutorialManager.InstanceExists);
         
-        ShowShield = showShieldedEveryone || showShieldedSelf || showShieldedMedic || (PlayerControl.LocalPlayer.HasDied() && genOpt.TheDeadKnow && !body && !fakePlayer?.body);
+        ShowShield = showShieldedSelf || showShieldedMedic || (PlayerControl.LocalPlayer.HasDied() && genOpt.TheDeadKnow && !body && !fakePlayer?.body);
         
         MedicShield = AnimStore.SpawnAnimBody(Player, TouAssets.MedicShield.LoadAsset(), false, -1.1f, -0.1f, 1.5f)!;
     }

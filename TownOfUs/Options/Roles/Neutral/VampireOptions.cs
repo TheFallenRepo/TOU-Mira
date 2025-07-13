@@ -26,13 +26,13 @@ public sealed class VampireOptions : AbstractOptionGroup<VampireRole>
         "Crewmates", "Crew & NBs", "Crew & NEs", "Crew, NBs & NEs", "Crew & Lovers", "Crew, Lovers & NBs",
         "Crew, Lovers & NEs", "Crew, Lovers, NBs & NEs"
     ])]
-    public BiteOptions ConvertOptions { get; set; } = BiteOptions.CrewNeutralBenignAndNeutralEvil;
+    public BiteOptions ConvertOptions { get; set; } = BiteOptions.OnlyCrewmates;
 
     [ModdedToggleOption("New Vampires Can Convert")]
     public bool CanConvertAsNewVamp { get; set; } = true;
 
     [ModdedToggleOption("Vampires Can Vent")]
-    public bool CanVent { get; set; } = true;
+    public bool CanVent { get; set; } = false;
 }
 
 public enum BiteOptions

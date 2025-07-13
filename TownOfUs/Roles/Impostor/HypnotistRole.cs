@@ -1,7 +1,6 @@
 using System.Text;
 using AmongUs.GameOptions;
 using Il2CppInterop.Runtime.Attributes;
-using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
@@ -10,7 +9,6 @@ using Reactor.Utilities;
 using TownOfUs.Modifiers.Crewmate;
 using TownOfUs.Modules;
 using TownOfUs.Modules.Wiki;
-using TownOfUs.Options.Roles.Impostor;
 using TownOfUs.Roles.Crewmate;
 using TownOfUs.Utilities;
 using UnityEngine;
@@ -23,21 +21,6 @@ public sealed class HypnotistRole(IntPtr cppPtr)
     private MeetingMenu meetingMenu;
 
     public bool HysteriaActive { get; set; }
-
-    public void FixedUpdate()
-    {
-        if (Player == null || Player.Data.Role is not HypnotistRole || Player.HasDied() || !Player.AmOwner ||
-            MeetingHud.Instance || (!HudManager.Instance.UseButton.isActiveAndEnabled &&
-                                    !HudManager.Instance.PetButton.isActiveAndEnabled))
-        {
-            return;
-        }
-
-        HudManager.Instance.KillButton.ToggleVisible(OptionGroupSingleton<HypnotistOptions>.Instance.HypnoKill ||
-                                                     (Player != null && Player.GetModifiers<BaseModifier>()
-                                                         .Any(x => x is ICachedRole)) ||
-                                                     (Player != null && MiscUtils.ImpAliveCount == 1));
-    }
 
     public RoleBehaviour CrewVariant => RoleManager.Instance.GetRole((RoleTypes)RoleId.Get<LookoutRole>());
     public DoomableType DoomHintType => DoomableType.Fearmonger;

@@ -82,7 +82,7 @@ public sealed class JesterRole(IntPtr cppPtr)
         {
             if (OptionGroupSingleton<JesterOptions>.Instance.ScatterOn)
             {
-                Player.AddModifier<ScatterModifier>(OptionGroupSingleton<JesterOptions>.Instance.ScatterTimer);
+                Player.AddModifier<ScatterModifier>(OptionGroupSingleton<JesterOptions>.Instance.ScatterTimer.Value);
             }
 
             HudManager.Instance.ImpostorVentButton.graphic.sprite = TouNeutAssets.JesterVentSprite.LoadAsset();

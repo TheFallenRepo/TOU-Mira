@@ -35,7 +35,6 @@ public enum ModifierFaction
     Neutral,
     Impostor,
     CrewmateAlliance,
-    CrewmateUtility,
     CrewmateVisibility,
     CrewmatePostmortem,
     CrewmatePassive,

@@ -1,9 +1,7 @@
 using AmongUs.GameOptions;
-using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.Roles;
 using TownOfUs.Modules;
-using TownOfUs.Options.Roles.Crewmate;
 using TownOfUs.Roles.Crewmate;
 using TownOfUs.Roles.Neutral;
 using TownOfUs.Utilities;
@@ -110,21 +108,6 @@ public sealed class ImitatorCacheModifier : BaseModifier, ICachedRole
     private bool IsExempt(PlayerVoteArea voteArea)
     {
         var player = GameData.Instance.GetPlayerById(voteArea.TargetPlayerId);
-        var opts = OptionGroupSingleton<ImitatorOptions>.Instance;
-        if (player != null && player.Object.GetRoleWhenAlive() is ICrewVariant neutVariant &&
-            player.Object.IsNeutral() && opts.ImitateNeutrals &&
-            MiscUtils.GetPotentialRoles().Contains(neutVariant.CrewVariant))
-        {
-            return voteArea.TargetPlayerId == Player.PlayerId || Player.Data.IsDead || !voteArea!.AmDead;
-        }
-
-        if (player != null && player.Object.GetRoleWhenAlive() is ICrewVariant impVariant &&
-            player.Object.IsImpostor() && opts.ImitateImpostors &&
-            MiscUtils.GetPotentialRoles().Contains(impVariant.CrewVariant))
-        {
-            return voteArea.TargetPlayerId == Player.PlayerId || Player.Data.IsDead || !voteArea!.AmDead;
-        }
-
 
         if (player != null && !player.Object.IsCrewmate())
         {

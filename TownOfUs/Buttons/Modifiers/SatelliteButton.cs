@@ -17,12 +17,11 @@ public sealed class SatelliteButton : TownOfUsButton
     public override string Keybind => Keybinds.ModifierAction;
     public override Color TextOutlineColor => TownOfUsColors.Satellite;
     public override float Cooldown => OptionGroupSingleton<SatelliteOptions>.Instance.Cooldown + MapCooldown;
-    public override int MaxUses => (int)OptionGroupSingleton<SatelliteOptions>.Instance.MaxNumCast;
+    public override int MaxUses => 1;
     public override ButtonLocation Location => ButtonLocation.BottomLeft;
     public override LoadableAsset<Sprite> Sprite => TouAssets.BroadcastSprite;
 
-    public bool Usable { get; set; } = OptionGroupSingleton<SatelliteOptions>.Instance.FirstRoundUse ||
-                                       TutorialManager.InstanceExists;
+    public bool Usable { get; set; } = true;
 
     public override bool Enabled(RoleBehaviour? role)
     {
@@ -55,11 +54,6 @@ public sealed class SatelliteButton : TownOfUsButton
             notif1.Text.SetOutlineThickness(0.35f);
         }
 
-        if (OptionGroupSingleton<SatelliteOptions>.Instance.OneUsePerRound)
-        {
-            Usable = false;
-        }
-        // will return to this once i get more freetime
-        //deadBodies.Do(x => PlayerControl.LocalPlayer.GetModifier<SatelliteModifier>().NewMapIcon(MiscUtils.PlayerById(x.ParentId)));
+        Usable = false;
     }
 }

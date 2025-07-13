@@ -49,7 +49,7 @@ public sealed class CelebrityModifier : TouGameModifier, IWikiDiscoverable
 
     public override int GetAmountPerGame()
     {
-        return (int)OptionGroupSingleton<CrewmateModifierOptions>.Instance.CelebrityAmount != 0 ? 1 : 0;
+        return (int)OptionGroupSingleton<CrewmateModifierOptions>.Instance.CelebrityAmount;
     }
 
     public override bool IsModifierValidOn(RoleBehaviour role)

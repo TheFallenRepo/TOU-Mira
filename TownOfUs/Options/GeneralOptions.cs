@@ -45,7 +45,7 @@ public sealed class GeneralOptions : AbstractOptionGroup
     public float GameStartCd { get; set; } = 10f;
 
     [ModdedNumberOption("Temp Save Cooldown Reset", 0f, 15f, 0.5f, MiraNumberSuffixes.Seconds, "0.#")]
-    public float TempSaveCdReset { get; set; } = 2.5f;
+    public float TempSaveCdReset { get; set; } = 5f;
 
     [ModdedToggleOption("Parallel Medbay Scans")]
     public bool ParallelMedbay { get; set; } = true;

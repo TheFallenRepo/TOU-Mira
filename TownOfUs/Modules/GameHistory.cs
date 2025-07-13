@@ -37,7 +37,6 @@ public sealed class BodyReport
     public static string ParseMedicReport(BodyReport br)
     {
         var reportColorDuration = OptionGroupSingleton<MedicOptions>.Instance.MedicReportColorDuration;
-        var reportNameDuration = OptionGroupSingleton<MedicOptions>.Instance.MedicReportNameDuration;
 
         if (br.KillAge > reportColorDuration * 1000)
         {
@@ -49,12 +48,6 @@ public sealed class BodyReport
         {
             return
                 $"Body Report: The kill appears to have been a suicide! (Killed {Math.Round(br.KillAge / 1000)}s ago)";
-        }
-
-        if (br.KillAge < reportNameDuration * 1000)
-        {
-            return
-                $"Body Report: The killer appears to be {br.Killer?.Data.PlayerName}! (Killed {Math.Round(br.KillAge / 1000)}s ago)";
         }
 
         var typeOfColor = MedicRole.GetColorTypeForPlayer(br.Killer!);

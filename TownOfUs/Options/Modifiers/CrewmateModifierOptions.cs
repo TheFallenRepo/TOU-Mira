@@ -30,7 +30,7 @@ public sealed class CrewmateModifierOptions : AbstractOptionGroup
         Visible = () => OptionGroupSingleton<CrewmateModifierOptions>.Instance.BaitAmount > 0
     };
 
-    [ModdedNumberOption("Celebrity Amount", 0, 1)]
+    [ModdedNumberOption("Celebrity Amount", 0, 5)]
     public float CelebrityAmount { get; set; } = 0;
 
     public ModdedNumberOption CelebrityChance { get; } =
@@ -57,15 +57,6 @@ public sealed class CrewmateModifierOptions : AbstractOptionGroup
             Visible = () => OptionGroupSingleton<CrewmateModifierOptions>.Instance.FrostyAmount > 0
         };
 
-    [ModdedNumberOption("Investigator Amount", 0, 5)]
-    public float InvestigatorAmount { get; set; } = 0;
-
-    public ModdedNumberOption InvestigatorChance { get; } =
-        new("Investigator Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
-        {
-            Visible = () => OptionGroupSingleton<CrewmateModifierOptions>.Instance.InvestigatorAmount > 0
-        };
-
     [ModdedNumberOption("Multitasker Amount", 0, 5)]
     public float MultitaskerAmount { get; set; } = 0;
 
@@ -84,15 +75,6 @@ public sealed class CrewmateModifierOptions : AbstractOptionGroup
             Visible = () => OptionGroupSingleton<CrewmateModifierOptions>.Instance.NoisemakerAmount > 0
         };
 
-    [ModdedNumberOption("Operative Amount", 0, 5)]
-    public float OperativeAmount { get; set; } = 0;
-
-    public ModdedNumberOption OperativeChance { get; } =
-        new("Operative Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
-        {
-            Visible = () => OptionGroupSingleton<CrewmateModifierOptions>.Instance.OperativeAmount > 0
-        };
-
     [ModdedNumberOption("Rotting Amount", 0, 5)]
     public float RottingAmount { get; set; } = 0;
 
@@ -101,31 +83,6 @@ public sealed class CrewmateModifierOptions : AbstractOptionGroup
         {
             Visible = () => OptionGroupSingleton<CrewmateModifierOptions>.Instance.RottingAmount > 0
         };
-
-    [ModdedNumberOption("Scientist Amount", 0, 5)]
-    public float ScientistAmount { get; set; } = 0;
-
-    public ModdedNumberOption ScientistChance { get; } =
-        new("Scientist Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
-        {
-            Visible = () => OptionGroupSingleton<CrewmateModifierOptions>.Instance.ScientistAmount > 0
-        };
-
-    [ModdedNumberOption("Scout Amount", 0, 5)]
-    public float ScoutAmount { get; set; } = 0;
-
-    public ModdedNumberOption ScoutChance { get; } = new("Scout Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
-    {
-        Visible = () => OptionGroupSingleton<CrewmateModifierOptions>.Instance.ScoutAmount > 0
-    };
-
-    [ModdedNumberOption("Spy Amount", 0, 5)]
-    public float SpyAmount { get; set; } = 0;
-
-    public ModdedNumberOption SpyChance { get; } = new("Spy Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
-    {
-        Visible = () => OptionGroupSingleton<CrewmateModifierOptions>.Instance.SpyAmount > 0
-    };
 
     [ModdedNumberOption("Taskmaster Amount", 0, 5)]
     public float TaskmasterAmount { get; set; } = 0;

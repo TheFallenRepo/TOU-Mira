@@ -12,27 +12,18 @@ public sealed class MedicOptions : AbstractOptionGroup<MedicRole>
     public override string GroupName => TouLocale.Get(TouNames.Medic, "Medic");
 
     [ModdedEnumOption("Show Shielded Player", typeof(MedicOption),
-        ["Self", "Shielded", "Shielded + Self", "Everyone", "No One"])]
+        ["Self", "Shielded", "Shielded + Self"])]
     public MedicOption ShowShielded { get; set; } = MedicOption.ShieldedAndMedic;
 
     [ModdedEnumOption("Who Gets Murder Attempt Indicator", typeof(MedicOption),
-        ["Self", "Shielded", "Shielded + Self", "Everyone", "No One"])]
+        ["Self", "Shielded", "Shielded + Self"])]
     public MedicOption WhoGetsNotification { get; set; } = MedicOption.Medic;
-
-    [ModdedToggleOption("Can Give Shield Away Next Round")]
-    public bool ChangeTarget { get; set; } = true;
 
     [ModdedToggleOption("Shield Breaks On Murder Attempt")]
     public bool ShieldBreaks { get; set; } = false;
 
     [ModdedToggleOption("Show Reports in Chat")]
     public bool ShowReports { get; set; } = true;
-
-    public ModdedNumberOption MedicReportNameDuration { get; } = new($"Time Where {TouLocale.Get(TouNames.Medic, "Medic")} Will Have Name", 0f, 0f, 60f,
-        2.5f, MiraNumberSuffixes.Seconds)
-    {
-        Visible = () => OptionGroupSingleton<MedicOptions>.Instance.ShowReports
-    };
 
     public ModdedNumberOption MedicReportColorDuration { get; } = new($"Time Where {TouLocale.Get(TouNames.Medic, "Medic")} Will Have Color Type", 15, 0f,
         60f, 2.5f, MiraNumberSuffixes.Seconds)
@@ -45,7 +36,5 @@ public enum MedicOption
 {
     Medic,
     Shielded,
-    ShieldedAndMedic,
-    Everyone,
-    Nobody
+    ShieldedAndMedic
 }

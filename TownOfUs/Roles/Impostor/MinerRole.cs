@@ -4,7 +4,6 @@ using AmongUs.GameOptions;
 using Il2CppInterop.Runtime.Attributes;
 using MiraAPI.Events;
 using MiraAPI.GameOptions;
-using MiraAPI.Modifiers;
 using MiraAPI.Roles;
 using Reactor.Networking.Attributes;
 using Reactor.Utilities;
@@ -22,21 +21,6 @@ public sealed class MinerRole(IntPtr cppPtr)
     : ImpostorRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, IDoomable, ICrewVariant
 {
     [HideFromIl2Cpp] public List<Vent> Vents { get; set; } = [];
-
-    public void FixedUpdate()
-    {
-        if (Player == null || Player.Data.Role is not JanitorRole || Player.HasDied() || !Player.AmOwner ||
-            MeetingHud.Instance || (!HudManager.Instance.UseButton.isActiveAndEnabled &&
-                                    !HudManager.Instance.PetButton.isActiveAndEnabled))
-        {
-            return;
-        }
-
-        HudManager.Instance.KillButton.ToggleVisible(OptionGroupSingleton<MinerOptions>.Instance.MinerKill ||
-                                                     (Player != null && Player.GetModifiers<BaseModifier>()
-                                                         .Any(x => x is ICachedRole)) ||
-                                                     (Player != null && MiscUtils.ImpAliveCount == 1));
-    }
 
     public RoleBehaviour CrewVariant => RoleManager.Instance.GetRole((RoleTypes)RoleId.Get<EngineerTouRole>());
     public DoomableType DoomHintType => DoomableType.Fearmonger;

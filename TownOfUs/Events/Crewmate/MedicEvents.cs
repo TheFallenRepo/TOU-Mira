@@ -24,10 +24,6 @@ public static class MedicEvents
     [RegisterEvent]
     public static void RoundStartEventHandler(RoundStartEvent @event)
     {
-        if (PlayerControl.LocalPlayer.Data.Role is MedicRole)
-        {
-            MedicRole.OnRoundStart();
-        }
         var medicShields = ModifierUtils.GetActiveModifiers<MedicShieldModifier>();
 
         if (!medicShields.Any())
@@ -40,7 +36,6 @@ public static class MedicEvents
             var genOpt = OptionGroupSingleton<GeneralOptions>.Instance;
             var showShielded = OptionGroupSingleton<MedicOptions>.Instance.ShowShielded;
 
-            var showShieldedEveryone = showShielded == MedicOption.Everyone;
             var showShieldedSelf = PlayerControl.LocalPlayer.PlayerId == mod.Player.PlayerId &&
                                    showShielded is MedicOption.Shielded or MedicOption.ShieldedAndMedic;
             var showShieldedMedic = PlayerControl.LocalPlayer.PlayerId == mod.Medic.PlayerId &&
@@ -51,7 +46,7 @@ public static class MedicEvents
             var fakePlayer = FakePlayer.FakePlayers.FirstOrDefault(x =>
                 x.PlayerId == PlayerControl.LocalPlayer.PlayerId && !TutorialManager.InstanceExists);
         
-            mod.ShowShield = showShieldedEveryone || showShieldedSelf || showShieldedMedic || (PlayerControl.LocalPlayer.HasDied() && genOpt.TheDeadKnow && !body && !fakePlayer?.body);
+            mod.ShowShield = showShieldedSelf || showShieldedMedic || (PlayerControl.LocalPlayer.HasDied() && genOpt.TheDeadKnow && !body && !fakePlayer?.body);
         }
     }
 

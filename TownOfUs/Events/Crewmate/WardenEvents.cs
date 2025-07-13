@@ -32,7 +32,6 @@ public static class WardenEvents
             var genOpt = OptionGroupSingleton<GeneralOptions>.Instance;
             var show = OptionGroupSingleton<WardenOptions>.Instance.ShowFortified;
 
-            var showShieldedEveryone = show == FortifyOptions.Everyone;
             var showShieldedSelf = PlayerControl.LocalPlayer.PlayerId == mod.Player.PlayerId &&
                                    show is FortifyOptions.Self or FortifyOptions.SelfAndWarden;
             var showShieldedWarden = PlayerControl.LocalPlayer.PlayerId == mod.Warden.PlayerId &&
@@ -43,7 +42,7 @@ public static class WardenEvents
             var fakePlayer = FakePlayer.FakePlayers.FirstOrDefault(x =>
                 x.PlayerId == PlayerControl.LocalPlayer.PlayerId && !TutorialManager.InstanceExists);
         
-            mod.ShowFort = showShieldedEveryone || showShieldedSelf || showShieldedWarden || (PlayerControl.LocalPlayer.HasDied() && genOpt.TheDeadKnow && !body && !fakePlayer?.body);
+            mod.ShowFort = showShieldedSelf || showShieldedWarden || (PlayerControl.LocalPlayer.HasDied() && genOpt.TheDeadKnow && !body && !fakePlayer?.body);
         }
     }
 

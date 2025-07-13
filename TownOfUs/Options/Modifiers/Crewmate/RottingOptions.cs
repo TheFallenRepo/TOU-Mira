@@ -12,6 +12,6 @@ public sealed class RottingOptions : AbstractOptionGroup<RottingModifier>
     public override uint GroupPriority => 36;
     public override Color GroupColor => TownOfUsColors.Rotting;
 
-    [ModdedNumberOption("Time Before Body Rots Away", 0f, 25f, 1f, MiraNumberSuffixes.Seconds)]
+    [ModdedNumberOption("Time Before Body Rots Away", 1f, 15f, 1f, MiraNumberSuffixes.Seconds)]
     public float RotDelay { get; set; } = 5f;
 }

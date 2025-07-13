@@ -12,8 +12,8 @@ public sealed class InvestigatorOptions : AbstractOptionGroup<InvestigatorRole>
     [ModdedNumberOption("Footprint Size", 1f, 10f, suffixType: MiraNumberSuffixes.Multiplier)]
     public float FootprintSize { get; set; } = 4f;
 
-    [ModdedNumberOption("Footprint Interval", 0.5f, 6f, 0.5f, MiraNumberSuffixes.Seconds)]
-    public float FootprintInterval { get; set; } = 1;
+    [ModdedNumberOption("Footprint Interval", 0.05f, 1f, 0.05f, MiraNumberSuffixes.Seconds, "0.00")]
+    public float FootprintInterval { get; set; } = 0.1f;
 
     [ModdedNumberOption("Footprint Duration", 1f, 15f, 0.5f, MiraNumberSuffixes.Seconds)]
     public float FootprintDuration { get; set; } = 10f;

@@ -94,8 +94,6 @@ public static class TownOfUsEventHandlers
 
         CustomButtonSingleton<BarryButton>.Instance.Usable =
             OptionGroupSingleton<ButtonBarryOptions>.Instance.FirstRoundUse;
-        CustomButtonSingleton<SatelliteButton>.Instance.Usable =
-            OptionGroupSingleton<SatelliteOptions>.Instance.FirstRoundUse;
     }
 
     [RegisterEvent]

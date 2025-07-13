@@ -31,6 +31,6 @@ public sealed class VigilanteOptions : AbstractOptionGroup<VigilanteRole>
     [ModdedToggleOption("Can Guess Alliances")]
     public bool VigilanteGuessAlliances { get; set; } = true;
 
-    [ModdedNumberOption("Safe Shots Available", 0f, 3f, 1f, MiraNumberSuffixes.None, "0")]
-    public float MultiShots { get; set; } = 3;
+    [ModdedNumberOption("Safe Shots Available", 0f, 5f, 1f, MiraNumberSuffixes.None, "0")]
+    public float MultiShots { get; set; } = 0;
 }

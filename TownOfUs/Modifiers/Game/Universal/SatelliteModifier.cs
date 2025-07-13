@@ -7,7 +7,6 @@ using TownOfUs.Buttons.Modifiers;
 using TownOfUs.Modules.Anims;
 using TownOfUs.Modules.Wiki;
 using TownOfUs.Options.Modifiers;
-using TownOfUs.Options.Modifiers.Universal;
 using TownOfUs.Roles.Crewmate;
 using TownOfUs.Utilities;
 using UnityEngine;
@@ -36,7 +35,7 @@ public sealed class SatelliteModifier : UniversalGameModifier, IWikiDiscoverable
     public List<CustomButtonWikiDescription> Abilities { get; } =
     [
         new("Broadcast",
-            $"You can check for bodies on the map, which you can do {OptionGroupSingleton<SatelliteOptions>.Instance.MaxNumCast} time(s) per game.",
+            $"You can check for bodies on the map, 1 time per game.",
             TouAssets.BroadcastSprite)
     ];
 

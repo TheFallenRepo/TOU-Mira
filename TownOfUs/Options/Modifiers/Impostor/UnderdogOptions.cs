@@ -16,5 +16,5 @@ public sealed class UnderdogOptions : AbstractOptionGroup<UnderdogModifier>
     public float KillCooldownIncrease { get; set; } = 5f;
 
     [ModdedToggleOption("Increased Kill Cooldown When 2+ Imps")]
-    public bool ExtraImpsKillCooldown { get; set; } = false;
+    public bool ExtraImpsKillCooldown { get; set; } = true;
 }

@@ -25,16 +25,10 @@ public sealed class TelepathOptions : AbstractOptionGroup<TelepathModifier>
     };
 
     public ModdedNumberOption TelepathArrowDuration { get; } = new("Dead Body Arrow Duration", 2.5f, 0f, 5f, 0.5f,
-        MiraNumberSuffixes.Seconds, "0.00")
+        MiraNumberSuffixes.Seconds, "0.0")
     {
         Visible = () => OptionGroupSingleton<TelepathOptions>.Instance.KnowKillLocation ||
                         (OptionGroupSingleton<TelepathOptions>.Instance.KnowDeath &&
                          OptionGroupSingleton<TelepathOptions>.Instance.KnowDeathLocation)
     };
-
-    [ModdedToggleOption("Know When Teammate Guesses Successfully")]
-    public bool KnowCorrectGuess { get; set; } = true;
-
-    [ModdedToggleOption("Know When Teammate Fails To Guess")]
-    public bool KnowFailedGuess { get; set; } = true;
 }

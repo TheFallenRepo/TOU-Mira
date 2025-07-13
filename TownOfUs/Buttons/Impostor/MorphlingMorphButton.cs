@@ -17,7 +17,6 @@ public sealed class MorphlingMorphButton : TownOfUsRoleButton<MorphlingRole>, IA
     public override Color TextOutlineColor => TownOfUsColors.Impostor;
     public override float Cooldown => OptionGroupSingleton<MorphlingOptions>.Instance.MorphlingCooldown + MapCooldown;
     public override float EffectDuration => OptionGroupSingleton<MorphlingOptions>.Instance.MorphlingDuration;
-    public override int MaxUses => (int)OptionGroupSingleton<MorphlingOptions>.Instance.MaxMorphs;
     public override LoadableAsset<Sprite> Sprite => TouImpAssets.MorphSprite;
 
     public override void ClickHandler()

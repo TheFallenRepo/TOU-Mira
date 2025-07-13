@@ -12,5 +12,5 @@ public sealed class ProsecutorOptions : AbstractOptionGroup<ProsecutorRole>
     public bool ExileOnCrewmate { get; set; } = true;
 
     [ModdedNumberOption("Max Prosecutions", 1, 5)]
-    public float MaxProsecutions { get; set; } = 2f;
+    public float MaxProsecutions { get; set; } = 3f;
 }

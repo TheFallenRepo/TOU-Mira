@@ -18,11 +18,11 @@ public sealed class GuardianAngelOptions : AbstractOptionGroup<GuardianAngelTouR
     [ModdedNumberOption("Max Number Of Protects", 1, 15, 1, MiraNumberSuffixes.None, "0")]
     public float MaxProtects { get; set; } = 5;
 
-    [ModdedEnumOption("Show Protected Player", typeof(ProtectOptions), ["Guardian Angel", "Self + GA", "Everyone"])]
+    [ModdedEnumOption("Show Protected Player", typeof(ProtectOptions), ["Self", "Guardian Angel", "Self + GA"])]
     public ProtectOptions ShowProtect { get; set; } = ProtectOptions.SelfAndGA;
 
     [ModdedEnumOption("On Target Death, GA Becomes", typeof(BecomeOptions))]
-    public BecomeOptions OnTargetDeath { get; set; } = BecomeOptions.Amnesiac;
+    public BecomeOptions OnTargetDeath { get; set; } = BecomeOptions.Survivor;
 
     [ModdedToggleOption("GA Knows Targets Role")]
     public bool GAKnowsTargetRole { get; set; } = true;
@@ -33,9 +33,9 @@ public sealed class GuardianAngelOptions : AbstractOptionGroup<GuardianAngelTouR
 
 public enum ProtectOptions
 {
+    Self,
     GA,
-    SelfAndGA,
-    Everyone
+    SelfAndGA
 }
 
 public enum BecomeOptions

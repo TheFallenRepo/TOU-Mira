@@ -17,16 +17,13 @@ public sealed class UndertakerOptions : AbstractOptionGroup<UndertakerRole>
     public float DragSpeedMultiplier { get; set; } = 0.75f;
 
     [ModdedToggleOption("Dragging Speed Is Affected by Body Size")]
-    public bool AffectedSpeed { get; set; } = true;
+    public bool AffectedSpeed { get; set; } = false;
 
     [ModdedToggleOption("Undertaker Can Vent")]
-    public bool CanVent { get; set; } = true;
+    public bool CanVent { get; set; } = false;
 
     public ModdedToggleOption CanVentWithBody { get; } = new("Can Vent With Body", false)
     {
         Visible = () => OptionGroupSingleton<UndertakerOptions>.Instance.CanVent
     };
-
-    [ModdedToggleOption("Undertaker Can Kill With Teammate")]
-    public bool UndertakerKill { get; set; } = true;
 }

@@ -1,55 +1,53 @@
 ﻿using AmongUs.GameOptions;
 using MiraAPI.GameOptions;
-using MiraAPI.Hud;
 using MiraAPI.Modifiers;
 using MiraAPI.Utilities.Assets;
 using TownOfUs.Modifiers;
-using TownOfUs.Modifiers.Game.Crewmate;
 using TownOfUs.Modifiers.Neutral;
-using TownOfUs.Options.Modifiers.Crewmate;
+using TownOfUs.Options.Roles.Crewmate;
+using TownOfUs.Roles.Crewmate;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace TownOfUs.Buttons.Modifiers;
+namespace TownOfUs.Buttons.Crewmates;
 
-public sealed class ScientistButton : TownOfUsButton
+public sealed class VitalsButton : TownOfUsRoleButton<OperativeRole>
 {
     public VitalsMinigame? vitals;
     public override string Name => "Vitals";
-    public override string Keybind => Keybinds.ModifierAction;
-    public override Color TextOutlineColor => TownOfUsColors.Scientist;
-    public override float Cooldown => OptionGroupSingleton<ScientistOptions>.Instance.DisplayCooldown + MapCooldown;
-    public float AvailableCharge { get; set; } = OptionGroupSingleton<ScientistOptions>.Instance.StartingCharge;
+    public override string Keybind => Keybinds.PrimaryAction;
+    public override Color TextOutlineColor => TownOfUsColors.Operative;
+    public override float Cooldown => OptionGroupSingleton<OperativeOptions>.Instance.DisplayCooldown + MapCooldown;
+    public float AvailableCharge { get; set; } = OptionGroupSingleton<OperativeOptions>.Instance.StartingVitalsCharge;
 
     public override float EffectDuration
     {
         get
         {
-            if (OptionGroupSingleton<ScientistOptions>.Instance.DisplayDuration == 0)
+            if (OptionGroupSingleton<OperativeOptions>.Instance.DisplayDuration == 0)
             {
                 return AvailableCharge;
             }
 
-            return AvailableCharge < OptionGroupSingleton<ScientistOptions>.Instance.DisplayDuration
+            return AvailableCharge < OptionGroupSingleton<OperativeOptions>.Instance.DisplayDuration
                 ? AvailableCharge
-                : OptionGroupSingleton<ScientistOptions>.Instance.DisplayDuration;
+                : OptionGroupSingleton<OperativeOptions>.Instance.DisplayDuration;
         }
     }
 
-    public override ButtonLocation Location => ButtonLocation.BottomLeft;
     public override LoadableAsset<Sprite> Sprite => TouAssets.VitalsSprite;
 
     public override bool Enabled(RoleBehaviour? role)
     {
         return PlayerControl.LocalPlayer != null &&
-               PlayerControl.LocalPlayer.HasModifier<ScientistModifier>() &&
+               PlayerControl.LocalPlayer.Data.Role is OperativeRole &&
                !PlayerControl.LocalPlayer.Data.IsDead;
     }
 
     public override void CreateButton(Transform parent)
     {
         base.CreateButton(parent);
-        AvailableCharge = OptionGroupSingleton<ScientistOptions>.Instance.StartingCharge;
+        AvailableCharge = OptionGroupSingleton<OperativeOptions>.Instance.StartingVitalsCharge;
     }
 
     private void RefreshAbilityButton()
@@ -131,11 +129,6 @@ public sealed class ScientistButton : TownOfUsButton
 
     protected override void OnClick()
     {
-        if (!OptionGroupSingleton<ScientistOptions>.Instance.MoveWithMenu)
-        {
-            PlayerControl.LocalPlayer.NetTransform.Halt();
-        }
-
         vitals = Object.Instantiate<VitalsMinigame>(RoleManager.Instance.GetRole(RoleTypes.Scientist)
             .Cast<ScientistRole>().VitalsPrefab);
         vitals.transform.SetParent(Camera.main.transform, false);

@@ -15,9 +15,7 @@ using TownOfUs.Modifiers;
 using TownOfUs.Modifiers.Game;
 using TownOfUs.Modules;
 using TownOfUs.Options;
-using TownOfUs.Options.Roles.Neutral;
 using TownOfUs.Roles;
-using TownOfUs.Roles.Neutral;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -28,29 +26,18 @@ public static class MiscUtils
 {
     public static int KillersAliveCount => Helpers.GetAlivePlayers().Count(x => x.IsImpostor() ||
         x.Is(RoleAlignment.NeutralKilling) ||
-        (x.Data.Role is InquisitorRole inquis && OptionGroupSingleton<InquisitorOptions>.Instance.StallGame &&
-         inquis is { CanVanquish: true, TargetsDead: false } && Helpers.GetAlivePlayers().Count <= 3) ||
         (x.Data.Role is ITouCrewRole { IsPowerCrew: true } &&
          !(x.TryGetModifier<AllianceGameModifier>(out var allyMod) && !allyMod.CrewContinuesGame) &&
          OptionGroupSingleton<GeneralOptions>.Instance.CrewKillersContinue));
 
     public static int RealKillersAliveCount => Helpers.GetAlivePlayers().Count(x =>
-        x.IsImpostor() || x.Is(RoleAlignment.NeutralKilling) || (x.Data.Role is InquisitorRole inquis &&
-                                                                 OptionGroupSingleton<InquisitorOptions>.Instance
-                                                                     .StallGame && inquis is
-                                                                     { CanVanquish: true, TargetsDead: false }
-                                                                 && Helpers.GetAlivePlayers().Count <= 3));
+        x.IsImpostor() || x.Is(RoleAlignment.NeutralKilling));
 
     public static int NKillersAliveCount => Helpers.GetAlivePlayers().Count(x =>
-        x.Is(RoleAlignment.NeutralKilling) || (x.Data.Role is InquisitorRole inquis &&
-                                               OptionGroupSingleton<InquisitorOptions>.Instance.StallGame &&
-                                               inquis is { CanVanquish: true, TargetsDead: false }
-                                               && Helpers.GetAlivePlayers().Count <= 3));
+        x.Is(RoleAlignment.NeutralKilling));
 
     public static int NonImpKillersAliveCount => Helpers.GetAlivePlayers().Count(x =>
         x.Is(RoleAlignment.NeutralKilling) ||
-        (x.Data.Role is InquisitorRole inquis && OptionGroupSingleton<InquisitorOptions>.Instance.StallGame &&
-         inquis is { CanVanquish: true, TargetsDead: false } && Helpers.GetAlivePlayers().Count <= 3) ||
         (x.Data.Role is ITouCrewRole { IsPowerCrew: true } &&
          !(x.TryGetModifier<AllianceGameModifier>(out var allyMod) && !allyMod.CrewContinuesGame) &&
          OptionGroupSingleton<GeneralOptions>.Instance.CrewKillersContinue));

@@ -10,8 +10,8 @@ public sealed class LookoutOptions : AbstractOptionGroup<LookoutRole>
 {
     public override string GroupName => "Lookout";
 
-    [ModdedNumberOption("Watch Cooldown", 1f, 30f, 1f, MiraNumberSuffixes.Seconds)]
-    public float WatchCooldown { get; set; } = 20f;
+    [ModdedNumberOption("Watch Cooldown", 1f, 15f, 1f, MiraNumberSuffixes.Seconds)]
+    public float WatchCooldown { get; set; } = 10f;
 
     [ModdedNumberOption("Max Players That Can Be Watched", 1f, 15f, 1f, MiraNumberSuffixes.None, "0")]
     public float MaxWatches { get; set; } = 5;
