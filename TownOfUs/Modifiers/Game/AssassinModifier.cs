@@ -138,6 +138,19 @@ public abstract class AssassinModifier : ExcludedGameModifier
 
         void ClickHandler(PlayerControl victim)
         {
+            if (victim.TryGetModifier<OracleBlessedModifier>(out var oracleMod))
+            {
+                OracleRole.RpcOracleBlessNotify(oracleMod.Oracle, PlayerControl.LocalPlayer, victim);
+
+                MeetingMenu.Instances.Do(x => x.HideSingle(victim.PlayerId));
+
+                shapeMenu.Close();
+                LastGuessedItem = string.Empty;
+                LastAttemptedVictim = null;
+
+                return;
+            }
+
             if (victim == Player && Player.TryGetModifier<DoubleShotModifier>(out var modifier) && !modifier.Used)
             {
                 modifier!.Used = true;

@@ -15,14 +15,13 @@ public sealed class FootstepsModifier : BaseModifier
 {
     public Dictionary<GameObject, SpriteRenderer>? _currentSteps;
     public Color _footstepColor;
-    private Vector3 _lastPos;
+    private float _footstepInterval;
     public override string ModifierName => "Footsteps";
     public override bool HideOnUi => true;
 
     public override void OnActivate()
     {
         _currentSteps = [];
-        _lastPos = Player.transform.position;
 
         _footstepColor = OptionGroupSingleton<InvestigatorOptions>.Instance.ShowAnonymousFootprints
             ? new Color(0.2f, 0.2f, 0.2f, 1f)
@@ -44,9 +43,10 @@ public sealed class FootstepsModifier : BaseModifier
     {
         if (_currentSteps == null || Player.HasModifier<ConcealedModifier>() ||
             (Player.TryGetModifier<DisabledModifier>(out var mod) && !mod.IsConsideredAlive) ||
-            Vector3.Distance(_lastPos, Player.transform.position) <
+            _footstepInterval <
             OptionGroupSingleton<InvestigatorOptions>.Instance.FootprintInterval)
         {
+            _footstepInterval += Time.fixedDeltaTime;
             return;
         }
 
@@ -64,7 +64,7 @@ public sealed class FootstepsModifier : BaseModifier
             transform =
             {
                 parent = ShipStatus.Instance?.transform,
-                position = new Vector3(Player.transform.position.x, Player.transform.position.y, 2.5708f),
+                position = Player.transform.position,
                 rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward)
             }
         };
@@ -83,8 +83,9 @@ public sealed class FootstepsModifier : BaseModifier
                                          (OptionGroupSingleton<InvestigatorOptions>.Instance.FootprintSize / 10);
 
         _currentSteps.Add(footstep, sprite);
-        _lastPos = Player.transform.position;
         Coroutines.Start(FootstepDisappear(footstep, sprite));
+
+        _footstepInterval = 0;
     }
 
     public override void OnDeath(DeathReason reason)
