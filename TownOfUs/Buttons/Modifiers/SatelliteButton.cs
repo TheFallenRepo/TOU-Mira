@@ -21,18 +21,11 @@ public sealed class SatelliteButton : TownOfUsButton
     public override ButtonLocation Location => ButtonLocation.BottomLeft;
     public override LoadableAsset<Sprite> Sprite => TouAssets.BroadcastSprite;
 
-    public bool Usable { get; set; } = true;
-
     public override bool Enabled(RoleBehaviour? role)
     {
         return PlayerControl.LocalPlayer != null &&
                PlayerControl.LocalPlayer.HasModifier<SatelliteModifier>() &&
                !PlayerControl.LocalPlayer.Data.IsDead;
-    }
-
-    public override bool CanUse()
-    {
-        return base.CanUse() && Usable;
     }
 
     public override void CreateButton(Transform parent)
@@ -53,7 +46,5 @@ public sealed class SatelliteButton : TownOfUsButton
                 new Vector3(0f, 1f, -20f), spr: TouModifierIcons.Satellite.LoadAsset());
             notif1.Text.SetOutlineThickness(0.35f);
         }
-
-        Usable = false;
     }
 }
