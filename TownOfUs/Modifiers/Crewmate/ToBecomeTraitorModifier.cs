@@ -25,6 +25,12 @@ public sealed class ToBecomeTraitorModifier : ExcludedGameModifier, IAssignableT
 
     public void AssignTargets()
     {
+        if (GameOptionsManager.Instance.CurrentGameOptions.RoleOptions
+            .GetNumPerGame((RoleTypes)RoleId.Get<TraitorRole>()) == 0)
+        {
+            return;
+        }
+
         Random rnd = new();
         var chance = rnd.Next(1, 101);
 
@@ -40,13 +46,12 @@ public sealed class ToBecomeTraitorModifier : ExcludedGameModifier, IAssignableT
                             !x.HasModifier<EgotistModifier>() &&
                             x.Data.Role is not MayorRole).ToList();
 
-            Random rndIndex = new();
             if (filtered.Count == 0)
             {
                 return;
             }
 
-            var randomTarget = filtered[rndIndex.Next(0, filtered.Count)];
+            var randomTarget = filtered[rnd.Next(0, filtered.Count)];
 
             randomTarget.RpcAddModifier<ToBecomeTraitorModifier>();
         }
