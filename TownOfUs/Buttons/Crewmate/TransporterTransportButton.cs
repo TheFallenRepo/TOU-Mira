@@ -65,19 +65,31 @@ public sealed class TransporterTransportButton : TownOfUsRoleButton<TransporterR
                             (plr2.moveable || plr2.inVent),
                     plr2 =>
                     {
-                        TransporterRole.RpcTransport(PlayerControl.LocalPlayer, plr.PlayerId, plr2!.PlayerId);
                         player2Menu.Close();
+                        if (plr2 == null)
+                        {
+                            return;
+                        }
+                        TransporterRole.RpcTransport(PlayerControl.LocalPlayer, plr.PlayerId, plr2!.PlayerId);
                     }
                 );
                 foreach (var panel in player2Menu.potentialVictims)
                 {
                     panel.PlayerIcon.cosmetics.SetPhantomRoleAlpha(1f);
+                    if (panel.NameText.text != PlayerControl.LocalPlayer.Data.PlayerName)
+                    {
+                        panel.NameText.color = Color.white;
+                    }
                 }
             }
         );
         foreach (var panel in player1Menu.potentialVictims)
         {
             panel.PlayerIcon.cosmetics.SetPhantomRoleAlpha(1f);
+            if (panel.NameText.text != PlayerControl.LocalPlayer.Data.PlayerName)
+            {
+                panel.NameText.color = Color.white;
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
+using System.Globalization;
 using HarmonyLib;
 using MiraAPI.Events;
+using System.Text;
 using MiraAPI.Events.Vanilla.Gameplay;
 using MiraAPI.Events.Vanilla.Meeting;
 using MiraAPI.Events.Vanilla.Meeting.Voting;
@@ -14,6 +16,7 @@ using MiraAPI.Utilities;
 using PowerTools;
 using Reactor.Utilities;
 using Reactor.Utilities.Extensions;
+using TownOfUs.Buttons;
 using TownOfUs.Buttons.Crewmate;
 using TownOfUs.Buttons.Impostor;
 using TownOfUs.Buttons.Modifiers;
@@ -24,6 +27,7 @@ using TownOfUs.Modules.Anims;
 using TownOfUs.Options.Modifiers.Universal;
 using TownOfUs.Options.Roles.Crewmate;
 using TownOfUs.Options.Roles.Impostor;
+using TownOfUs.Patches;
 using TownOfUs.Roles;
 using TownOfUs.Roles.Crewmate;
 using TownOfUs.Roles.Impostor;
@@ -43,6 +47,21 @@ public static class TownOfUsEventHandlers
         {
             return; // Only run when game starts.
         }
+
+        if (FirstDeadPatch.PlayerNames.Count > 0)
+        {
+            var stringB = new StringBuilder();
+            stringB.Append(CultureInfo.InvariantCulture, $"List Of Players That Died In Order: ");
+            foreach (var playername in FirstDeadPatch.PlayerNames)
+            {
+                stringB.Append(CultureInfo.InvariantCulture, $"{playername}, ");
+            }
+            
+            stringB = stringB.Remove(stringB.Length - 2, 2);
+            
+            Logger<TownOfUsPlugin>.Warning(stringB.ToString());
+        }
+        FirstDeadPatch.PlayerNames = [];
 
         HudManager.Instance.SetHudActive(false);
         HudManager.Instance.SetHudActive(true);
@@ -107,6 +126,21 @@ public static class TownOfUsEventHandlers
         var player = @event.Player;
         if (!MeetingHud.Instance && player.AmOwner)
         {
+            foreach (var button in CustomButtonManager.Buttons)
+            {
+                if (button is TownOfUsTargetButton<PlayerControl> touPlayerButton && touPlayerButton.Target != null)
+                {
+                    touPlayerButton.Target.cosmetics.currentBodySprite.BodySprite.SetOutline(null);
+                }
+                else if (button is TownOfUsTargetButton<DeadBody> touBodyButton && touBodyButton.Target != null)
+                {
+                    touBodyButton.Target.bodyRenderers.Do(x => x.SetOutline(null));
+                }
+                else if (button is TownOfUsTargetButton<Vent> touVentButton && touVentButton.Target != null)
+                {
+                    touVentButton.Target.SetOutline(false, true, player.Data.Role.TeamColor);
+                }
+            }
             HudManager.Instance.SetHudActive(false);
             HudManager.Instance.SetHudActive(true);
         }
