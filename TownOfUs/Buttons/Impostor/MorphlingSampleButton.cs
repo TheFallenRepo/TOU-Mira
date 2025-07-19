@@ -1,8 +1,6 @@
-﻿using MiraAPI.GameOptions;
-using MiraAPI.Hud;
+﻿using MiraAPI.Hud;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
-using TownOfUs.Options.Roles.Impostor;
 using TownOfUs.Roles.Impostor;
 using TownOfUs.Utilities;
 using UnityEngine;
@@ -14,7 +12,8 @@ public sealed class MorphlingSampleButton : TownOfUsRoleButton<MorphlingRole, Pl
     public override string Name => "Sample";
     public override string Keybind => Keybinds.SecondaryAction;
     public override Color TextOutlineColor => TownOfUsColors.Impostor;
-    public override float Cooldown => OptionGroupSingleton<MorphlingOptions>.Instance.MorphlingCooldown;
+    public override float Cooldown => 0.001f;
+    public override float InitialCooldown => 0.001f;
     public override LoadableAsset<Sprite> Sprite => TouImpAssets.SampleSprite;
 
     public override bool Enabled(RoleBehaviour? role)
@@ -38,6 +37,7 @@ public sealed class MorphlingSampleButton : TownOfUsRoleButton<MorphlingRole, Pl
         notif1.transform.localPosition = new Vector3(0f, 1f, -20f);
 
         CustomButtonSingleton<MorphlingMorphButton>.Instance.SetActive(true, Role);
+        CustomButtonSingleton<MorphlingMorphButton>.Instance.ResetCooldownAndOrEffect();
         SetActive(false, Role);
     }
 
