@@ -103,11 +103,14 @@ public static class DeathEventHandlers
             var cod = "Killed";
             switch (source.GetRoleWhenAlive())
             {
-                case SheriffRole or DeputyRole:
+                case SheriffRole:
                     cod = "Shot";
                     break;
-                case VeteranRole:
+                case DeputyRole:
                     cod = "Blasted";
+                    break;
+                case VeteranRole:
+                    cod = "Attacked";
                     break;
                 case JailorRole:
                     cod = "Executed";
@@ -128,7 +131,7 @@ public static class DeathEventHandlers
                     cod = "Reaped";
                     break;
                 case VampireRole:
-                    cod = "Bit";
+                    cod = "Bitten";
                     break;
                 case WerewolfRole:
                     cod = "Rampaged";
@@ -141,6 +144,11 @@ public static class DeathEventHandlers
                     break;
                 case ExecutionerRole:
                     cod = "Tormented";
+                    break;
+                case MirrorcasterRole mirror:
+                    cod = mirror.UnleashString != string.Empty ? mirror.UnleashString : "Killed";
+                    mirror.UnleashString = string.Empty;
+                    mirror.ContainedRole = null;
                     break;
                 case InquisitorRole:
                     cod = "Vanquished";

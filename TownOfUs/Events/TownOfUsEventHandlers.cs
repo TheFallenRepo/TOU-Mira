@@ -20,10 +20,14 @@ using TownOfUs.Buttons;
 using TownOfUs.Buttons.Crewmate;
 using TownOfUs.Buttons.Impostor;
 using TownOfUs.Buttons.Modifiers;
+using TownOfUs.Buttons.Neutral;
 using TownOfUs.Events.TouEvents;
+using TownOfUs.Modifiers;
 using TownOfUs.Modifiers.Game.Universal;
+using TownOfUs.Modifiers.Neutral;
 using TownOfUs.Modules;
 using TownOfUs.Modules.Anims;
+using TownOfUs.Options;
 using TownOfUs.Options.Modifiers.Universal;
 using TownOfUs.Options.Roles.Crewmate;
 using TownOfUs.Options.Roles.Impostor;
@@ -40,6 +44,25 @@ namespace TownOfUs.Events;
 
 public static class TownOfUsEventHandlers
 {
+    [RegisterEvent]
+    public static void StartMeetingEventHandler(StartMeetingEvent @event)
+    {
+        foreach (var mod in ModifierUtils.GetActiveModifiers<MisfortuneTargetModifier>())
+        {
+            mod.ModifierComponent?.RemoveModifier(mod);
+        }
+
+        var exeButton = CustomButtonSingleton<ExeTormentButton>.Instance;
+        var jestButton = CustomButtonSingleton<JesterHauntButton>.Instance;
+        var phantomButton = CustomButtonSingleton<PhantomSpookButton>.Instance;
+        if (exeButton.Show || jestButton.Show || phantomButton.Show)
+        {
+            PlayerControl.LocalPlayer.RpcRemoveModifier<IndirectAttackerModifier>();
+        }
+        exeButton.Show = false;
+        jestButton.Show = false;
+        phantomButton.Show = false;
+    }
     [RegisterEvent]
     public static void RoundStartHandler(RoundStartEvent @event)
     {
@@ -362,6 +385,12 @@ public static class TownOfUsEventHandlers
         MeetingMenu.Instances.Do(x => x.HideSingle(player.PlayerId));
     }
 
+    private static IEnumerator CoHideHud()
+    {
+        yield return new WaitForSeconds(0.01f);
+        HudManager.Instance.SetHudActive(false);
+    }
+
     private static IEnumerator CoAnimateDeath(PlayerVoteArea voteArea)
     {
         var animDic = new Dictionary<AnimationClip, AnimationClip>
@@ -419,6 +448,15 @@ public static class TownOfUsEventHandlers
 
     private static void HandleMeetingMurder(MeetingHud instance, PlayerControl source, PlayerControl target)
     {
+        var timer = (int)OptionGroupSingleton<GeneralOptions>.Instance.AddedMeetingDeathTimer;
+        if (timer > 0 && timer <= 15)
+        {
+            instance.discussionTimer -= timer;
+        }
+        else if (timer >= 15)
+        {
+            instance.discussionTimer -= 15f;
+        }
         // To handle murders during a meeting
         var targetVoteArea = instance.playerStates.First(x => x.TargetPlayerId == target.PlayerId);
 
@@ -445,7 +483,7 @@ public static class TownOfUsEventHandlers
         }
 
         targetVoteArea.Overlay.gameObject.SetActive(false);
-        if (target.Data.Role is MayorRole)
+        if (target.GetRoleWhenAlive() is MayorRole mayor && mayor.Revealed)
         {
             MayorRole.DestroyReveal(targetVoteArea);
         }
@@ -456,12 +494,23 @@ public static class TownOfUsEventHandlers
         if (target.AmOwner)
         {
             MeetingMenu.Instances.Do(x => x.HideButtons());
-            HudManager.Instance.SetHudActive(false);
+            Coroutines.Start(CoHideHud());
         }
         // hide meeting menu button for victim
         else if (!source.AmOwner && !target.AmOwner)
         {
             MeetingMenu.Instances.Do(x => x.HideSingle(target.PlayerId));
+            if (PlayerControl.LocalPlayer.Data.Role is SwapperRole swapperRole)
+            {
+                if (swapperRole.Swap1 == targetVoteArea)
+                {
+                    swapperRole.Swap1 = null;
+                }
+                else if (swapperRole.Swap2 == targetVoteArea)
+                {
+                    swapperRole.Swap2 = null;
+                }
+            }
         }
 
         foreach (var pva in instance.playerStates)

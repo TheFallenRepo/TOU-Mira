@@ -13,11 +13,9 @@ namespace TownOfUs.Modifiers.Crewmate;
 public sealed class ImitatorCacheModifier : BaseModifier, ICachedRole
 {
     private MeetingMenu? _meetingMenu;
-    private NetworkedPlayerInfo? _prevSelectedPlr;
     private NetworkedPlayerInfo? _selectedPlr;
     public override string ModifierName => "Imitator";
     public override bool HideOnUi => true;
-    public bool ChangedSelectedPlayer { get; set; } = true;
     public bool ShowCurrentRoleFirst => true;
 
     public bool Visible => Player.AmOwner || PlayerControl.LocalPlayer.HasDied() ||
@@ -104,7 +102,6 @@ public sealed class ImitatorCacheModifier : BaseModifier, ICachedRole
 
         _meetingMenu!.Actives[voteArea.TargetPlayerId] = true;
         _selectedPlr = player;
-        ChangedSelectedPlayer = _prevSelectedPlr != _selectedPlr;
     }
 
     private bool IsExempt(PlayerVoteArea voteArea)
@@ -156,21 +153,10 @@ public sealed class ImitatorCacheModifier : BaseModifier, ICachedRole
             ModifierComponent?.RemoveModifier(this);
             return;
         }
-        
-        if (!ChangedSelectedPlayer)
-        {
-            return;
-        }
-
-        if (_prevSelectedPlr != null)
-        {
-            return;
-        }
 
         if (_selectedPlr == null || Player.Data.IsDead || !_selectedPlr.IsDead)
         {
             _selectedPlr = null;
-            _prevSelectedPlr = null;
             if (Player == null || Player.IsRole<ImitatorRole>())
             {
                 return;
@@ -190,7 +176,5 @@ public sealed class ImitatorCacheModifier : BaseModifier, ICachedRole
         {
             Player.RpcChangeRole((ushort)roleWhenAlive.Role, false);
         }
-
-        _prevSelectedPlr = _selectedPlr;
     }
 }

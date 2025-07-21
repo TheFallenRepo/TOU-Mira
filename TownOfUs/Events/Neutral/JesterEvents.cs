@@ -4,9 +4,12 @@ using MiraAPI.Events.Vanilla.Meeting;
 using MiraAPI.Events.Vanilla.Meeting.Voting;
 using MiraAPI.Events.Vanilla.Player;
 using MiraAPI.GameOptions;
+using MiraAPI.Hud;
 using MiraAPI.Modifiers;
 using MiraAPI.Roles;
 using MiraAPI.Utilities;
+using TownOfUs.Buttons.Neutral;
+using TownOfUs.Modifiers;
 using TownOfUs.Modifiers.Neutral;
 using TownOfUs.Modules;
 using TownOfUs.Modules.Localization;
@@ -45,6 +48,22 @@ public static class JesterEvents
 
                 notif1.Text.SetOutlineThickness(0.35f);
                 notif1.transform.localPosition = new Vector3(0f, 1f, -20f);
+                if (OptionGroupSingleton<JesterOptions>.Instance.JestWin is JestWinOptions.Haunts)
+                {
+                    PlayerControl.LocalPlayer.RpcAddModifier<IndirectAttackerModifier>(true);
+                    CustomButtonSingleton<JesterHauntButton>.Instance.SetActive(true, jester);
+                    DeathHandlerModifier.RpcUpdateDeathHandler(PlayerControl.LocalPlayer, "Ejected", -1, DeathHandlerOverride.SetTrue, lockInfo: DeathHandlerOverride.SetTrue);
+                    var notif2 = Helpers.CreateAndShowNotification(
+                        $"<b>You have one round to haunt a player of your choice to death, choose wisely.</b>",
+                        Color.white);
+
+                    notif2.Text.SetOutlineThickness(0.35f);
+                    notif2.transform.localPosition = new Vector3(0f, 0.85f, -20f);
+                }
+                else
+                {
+                    DeathHandlerModifier.RpcUpdateDeathHandler(PlayerControl.LocalPlayer, "Ejected", -1, DeathHandlerOverride.SetFalse, lockInfo: DeathHandlerOverride.SetTrue);
+                }
             }
             else
             {
@@ -111,6 +130,8 @@ public static class JesterEvents
             {
                 player.AddModifier<MisfortuneTargetModifier>();
             }
+            
+            CustomButtonSingleton<JesterHauntButton>.Instance.Show = true;
         }
     }
 }
